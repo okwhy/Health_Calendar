@@ -17,7 +17,11 @@ import lombok.ToString;
 @Setter
 @Getter
 @Entity
-public class Day implements Serializable {
+public class Date implements Serializable {
     @PrimaryKey(autoGenerate = true)
     private long id = 0;
+    private byte year;
+    private byte month;
+    private byte day;
+
 }
