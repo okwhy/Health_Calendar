@@ -8,8 +8,8 @@ android {
 
     defaultConfig {
         applicationId = "com.example.health_calendar"
-        minSdk = 34
-        targetSdk = 34
+        minSdk = 33
+        targetSdk = 33
         versionCode = 1
         versionName = "1.0"
 
