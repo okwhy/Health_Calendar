@@ -1,6 +1,7 @@
 package com.example.health_calendar.entites;
 
 import androidx.room.Entity;
+import androidx.room.PrimaryKey;
 
 import java.io.Serializable;
 
@@ -17,4 +18,6 @@ import lombok.ToString;
 @Getter
 @Entity
 public class Day implements Serializable {
+    @PrimaryKey(autoGenerate = true)
+    private long id = 0;
 }
