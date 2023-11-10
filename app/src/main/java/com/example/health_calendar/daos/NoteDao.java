@@ -5,7 +5,6 @@ import androidx.room.Query;
 
 
 import com.example.health_calendar.entites.Note;
-import com.example.health_calendar.enums.NoteCategories;
 
 import java.util.List;
 

@@ -17,8 +17,8 @@ public interface DateDao {
     void delete(Date ... dates);
     @Insert
     long insert(Date date);
-    @Query("select * from date where date.year =:year ")
+    @Query("select * from date where date.year =:year order by month,day")
     List<Date>getByYear(byte year);
-    @Query("select * from date where date.year =:year and date.month =:month order by day ASC")
+    @Query("select * from date where date.year =:year and date.month =:month order by day")
     List<Date>getByMonth(byte year,byte month);
 }
