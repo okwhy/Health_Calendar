@@ -3,6 +3,9 @@
     <style name="Base.Theme.Health_Calendar" parent="Theme.Material3.DayNight.NoActionBar">
         <!-- Customize your light theme here. -->
         <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
+
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowFullscreen">true</item>
     </style>
 
     <style name="Theme.Health_Calendar" parent="Base.Theme.Health_Calendar" />
