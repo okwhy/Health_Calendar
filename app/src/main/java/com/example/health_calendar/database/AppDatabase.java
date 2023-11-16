@@ -13,7 +13,7 @@ import com.example.health_calendar.entites.Note;
 
 @Database(entities = {Date.class, Note.class}, version = 1, exportSchema = false)
 public abstract class AppDatabase extends RoomDatabase {
-    public abstract DateDao dayDao();
+    public abstract DateDao dateDao();
     public abstract NoteDao noteDao();
     private final static String DB_NAME ="calender_db";
     private static AppDatabase instance;

@@ -34,13 +34,8 @@ public class MainActivity extends AppCompatActivity {
         CalendarView calendarView = findViewById(R.id.calendarView);
 
         final List<String> calendarStrings = new ArrayList<>();
+
         final int[] days= new int[31];
-
-        CalendarView calendarView = findViewById(R.id.calendarView);
-
-        final List<String> calendarStrings = new ArrayList<>();
-        final int[] days= new int[30];
-
         final int[] months = new int[12];
         final int[] years = new int[10];
 
@@ -58,7 +53,7 @@ public class MainActivity extends AppCompatActivity {
                     dayContent.setVisibility(View.VISIBLE);
                 }
 
-                for(int i = 0; i < 30; i++)
+                for(int i = 0; i < 31; i++)
                 {
                     if(days[i] == currentDay)
                     {
