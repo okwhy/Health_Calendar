@@ -1,23 +1,46 @@
 package com.example.health_calendar;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.WindowDecorActionBar;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+import android.widget.CalendarView;
+import android.widget.EditText;
+import android.widget.TextView;
 
 import com.example.health_calendar.entites.Date;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class MainActivity extends AppCompatActivity {
 
+    private int currentYear = 0;
+    private int currentMonth = 0;
+    private int currentDay = 0;
+
+    private int daysIndex = 0;
+    private int monthsIndex = 0;
+    private int yearIndex = 0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-<<<<<<< Updated upstream
-=======
+
         CalendarView calendarView = findViewById(R.id.calendarView);
 
         final List<String> calendarStrings = new ArrayList<>();
         final int[] days= new int[31];
+
+        CalendarView calendarView = findViewById(R.id.calendarView);
+
+        final List<String> calendarStrings = new ArrayList<>();
+        final int[] days= new int[30];
+
         final int[] months = new int[12];
         final int[] years = new int[10];
 
@@ -78,6 +101,5 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
->>>>>>> Stashed changes
     }
 }
