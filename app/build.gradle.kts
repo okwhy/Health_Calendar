@@ -47,4 +47,5 @@ dependencies {
     implementation("androidx.room:room-rxjava3:$room_version")
     implementation("androidx.room:room-guava:$room_version")
     implementation("androidx.room:room-paging:$room_version")
+    implementation("com.github.psinetron:slycalendarview:0.0.9")
 }
