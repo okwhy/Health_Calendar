@@ -9,7 +9,6 @@ import com.example.health_calendar.daos.NoteDao;
 import com.example.health_calendar.database.AppDatabase;
 import com.example.health_calendar.entites.Date;
 import com.example.health_calendar.entites.Note;
-import com.example.health_calendar.enums.NoteCategories;
 
 import java.lang.reflect.Array;
 import java.util.Arrays;
@@ -39,10 +38,7 @@ public class DataService {
         return dataService;
     }
     private DataService(Context context){
-        AppDatabase appDatabase = Room.databaseBuilder(context,
-                        AppDatabase.class, "myBase")
-                .fallbackToDestructiveMigration()
-                .build();
+        AppDatabase appDatabase = AppDatabase.getInstance(context);
         dateDao = appDatabase.dateDao();
         noteDao = appDatabase.noteDao();
     }

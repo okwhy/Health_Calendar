@@ -17,7 +17,7 @@ public abstract class AppDatabase extends RoomDatabase {
     public abstract NoteDao noteDao();
     private final static String DB_NAME ="calender_db";
     private static AppDatabase instance;
-    private static synchronized AppDatabase getInstance(Context context){
+    public static synchronized AppDatabase getInstance(Context context){
         if( instance == null){
             instance= Room.databaseBuilder(context.getApplicationContext(),AppDatabase.class,DB_NAME)
                     .fallbackToDestructiveMigration()
