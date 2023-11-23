@@ -106,7 +106,6 @@ public class MainActivity extends AppCompatActivity {
                             if (months[j] == currentMonth) {
                                 for (int k = 0; k < 10; k++) {
                                     if (years[k] == currentYear) {
-                                        calendarView.set
                                         calendarView.setBackgroundColor(10);
                                         textInputHeight.setText(calendarStrings.get(i));
                                         textInputWeight.setText(calendarStrings.get(i + 1));
