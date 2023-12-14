@@ -13,6 +13,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.example.health_calendar.entites.Date;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -164,5 +165,9 @@ public class MainActivity extends AppCompatActivity {
                 textInputHealth.setText("");
             }
         });
+
+
+
+
     }
 }
