@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
-        android:title="Dashbord"
+        android:title="Календарь"
         android:id="@+id/dashbord"
         android:icon="@drawable/dashbord"/>
     <item
-        android:title="Users"
+        android:title="Статистика"
         android:id="@+id/users"
         android:icon="@drawable/users"/>
     <item
-        android:title="Profile"
+        android:title="Экспорт"
         android:id="@+id/profile"
         android:icon="@drawable/profile"/>
 </menu>

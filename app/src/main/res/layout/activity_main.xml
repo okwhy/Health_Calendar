@@ -9,210 +9,244 @@
     <CalendarView
         android:id="@+id/calendarView"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:layout_gravity = "top"
+        android:layout_weight="3"
+        />
 
     <LinearLayout
         android:id="@+id/dayInfo"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:visibility="gone">
+        android:layout_gravity="center"
+        android:visibility="visible"
+        android:layout_weight="3"
+        >
 
-    <LinearLayout
-        android:id="@+id/dayHeight"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:visibility="gone">
 
-        <TextView
-            android:id="@+id/textHeight"
-            android:layout_width="wrap_content"
-            android:layout_height="40dp"
-            android:text="Рост (см):"
-            android:textColor="@color/black" />
-
-        <EditText
-            android:id="@+id/textInputHeight"
+        <LinearLayout
+            android:id="@+id/dayHeight"
             android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:layout_marginLeft="5dp"
-            android:hint="Введите рост"
-            android:textColor="@color/black" />
-    </LinearLayout>
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:visibility="visible">
 
-    <LinearLayout
-        android:id="@+id/dayWeight"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:visibility="gone">
+            <TextView
+                android:id="@+id/textHeight"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:text="Рост (см):"
+                android:visibility="gone"
+                android:textColor="@color/black" />
+            <EditText
+                android:id="@+id/textInputHeight"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginLeft="5dp"
+                android:hint="Введите рост"
+                android:visibility="gone"
+                android:textColor="@color/black" />
 
-        <TextView
-            android:id="@+id/textWeight"
-            android:layout_width="wrap_content"
-            android:layout_height="40dp"
-            android:text="Вес (кг):"
-            android:textColor="@color/black" />
+        </LinearLayout>
 
-        <EditText
-            android:id="@+id/textInputWeight"
+        <LinearLayout
+            android:id="@+id/dayWeight"
             android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:layout_marginLeft="5dp"
-            android:hint="Введите вес"
-            android:textColor="@color/black" />
-    </LinearLayout>
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:visibility="visible">
 
-    <LinearLayout
-        android:id="@+id/dayPulse"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:visibility="gone">
+            <TextView
+                android:id="@+id/textWeight"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:text="Вес (кг):"
+                android:visibility="gone"
+                android:textColor="@color/black" />
 
-        <TextView
-            android:id="@+id/textPulse"
-            android:layout_width="wrap_content"
-            android:layout_height="40dp"
-            android:text="ЧСС (уд/мин) в покое:"
-            android:textColor="@color/black" />
+            <EditText
+                android:id="@+id/textInputWeight"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginLeft="5dp"
+                android:hint="Введите вес"
+                android:visibility="gone"
+                android:textColor="@color/black" />
+        </LinearLayout>
 
-        <EditText
-            android:id="@+id/textInputPulse"
+        <LinearLayout
+            android:id="@+id/dayPulse"
             android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:layout_marginLeft="5dp"
-            android:hint="Введите ЧСС"
-            android:textColor="@color/black" />
-    </LinearLayout>
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:visibility="visible">
 
-    <LinearLayout
-        android:id="@+id/dayPressure"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:visibility="gone">
+            <TextView
+                android:id="@+id/textPulse"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:text="ЧСС (уд/мин) в покое:"
+                android:visibility="gone"
+                android:textColor="@color/black" />
 
-        <TextView
-            android:id="@+id/textPressure"
-            android:layout_width="wrap_content"
-            android:layout_height="40dp"
-            android:text="Давление (А/Д):"
-            android:textColor="@color/black" />
+            <EditText
+                android:id="@+id/textInputPulse"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginLeft="5dp"
+                android:hint="Введите ЧСС"
+                android:visibility="gone"
+                android:textColor="@color/black" />
+        </LinearLayout>
 
-        <EditText
-            android:id="@+id/textInputPressure"
+        <LinearLayout
+            android:id="@+id/dayPressure"
             android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:layout_marginLeft="5dp"
-            android:hint="Введите давление"
-            android:textColor="@color/black" />
-    </LinearLayout>
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:visibility="visible">
 
-    <LinearLayout
-        android:id="@+id/dayAppetite"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:visibility="gone">
+            <TextView
+                android:id="@+id/textPressure"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:text="Давление (А/Д):"
+                android:visibility="gone"
+                android:textColor="@color/black" />
 
-        <TextView
-            android:id="@+id/textAppetite"
-            android:layout_width="wrap_content"
-            android:layout_height="40dp"
-            android:text="Аппетит:"
-            android:textColor="@color/black" />
+            <EditText
+                android:id="@+id/textInputPressure"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginLeft="5dp"
+                android:hint="Введите давление"
+                android:visibility="gone"
+                android:textColor="@color/black" />
+        </LinearLayout>
 
-        <EditText
-            android:id="@+id/textInputAppetite"
+        <LinearLayout
+            android:id="@+id/dayAppetite"
             android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:layout_marginLeft="5dp"
-            android:hint="Введите аппетит"
-            android:textColor="@color/black" />
-    </LinearLayout>
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:visibility="visible">
 
-    <LinearLayout
-        android:id="@+id/daySlepping"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:visibility="gone">
+            <TextView
+                android:id="@+id/textAppetite"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:text="Аппетит:"
+                android:visibility="gone"
+                android:textColor="@color/black" />
 
-        <TextView
-            android:id="@+id/textSlepping"
-            android:layout_width="wrap_content"
-            android:layout_height="40dp"
-            android:text="Сон (ч.):"
-            android:textColor="@color/black" />
+            <EditText
+                android:id="@+id/textInputAppetite"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginLeft="5dp"
+                android:hint="Введите аппетит"
+                android:visibility="gone"
+                android:textColor="@color/black" />
+        </LinearLayout>
 
-        <EditText
-            android:id="@+id/textInputSlepping"
+        <LinearLayout
+            android:id="@+id/daySlepping"
             android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:layout_marginLeft="5dp"
-            android:hint="Введите кол-во часов сна"
-            android:textColor="@color/black" />
-    </LinearLayout>
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:visibility="visible">
 
-    <LinearLayout
-        android:id="@+id/dayExercise"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:visibility="gone">
+            <TextView
+                android:id="@+id/textSlepping"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:text="Сон (ч.):"
+                android:visibility="gone"
+                android:textColor="@color/black" />
 
-        <TextView
-            android:id="@+id/textExercise"
-            android:layout_width="wrap_content"
-            android:layout_height="40dp"
-            android:text="Физическая нагрузка(мин.):"
-            android:textColor="@color/black" />
+            <EditText
+                android:id="@+id/textInputSlepping"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginLeft="5dp"
+                android:hint="Введите кол-во часов сна"
+                android:visibility="gone"
+                android:textColor="@color/black" />
+        </LinearLayout>
 
-        <EditText
-            android:id="@+id/textInputExercise"
+        <LinearLayout
+            android:id="@+id/dayExercise"
             android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:layout_marginLeft="5dp"
-            android:hint="Введите кол-во минут физ. наг."
-            android:textColor="@color/black" />
-    </LinearLayout>
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:visibility="visible">
 
-    <LinearLayout
-        android:id="@+id/dayHealth"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:visibility="gone">
+            <TextView
+                android:id="@+id/textExercise"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:text="Физическая нагрузка(мин.):"
+                android:visibility="gone"
+                android:textColor="@color/black" />
 
-        <TextView
-            android:id="@+id/textHealth"
-            android:layout_width="wrap_content"
-            android:layout_height="40dp"
-            android:text="Самочувствие:"
-            android:textColor="@color/black" />
+            <EditText
+                android:id="@+id/textInputExercise"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginLeft="5dp"
+                android:hint="Введите кол-во минут физ. наг."
+                android:visibility="gone"
+                android:textColor="@color/black" />
+        </LinearLayout>
 
-        <EditText
-            android:id="@+id/textInputHealth"
+        <LinearLayout
+            android:id="@+id/dayHealth"
             android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:layout_marginLeft="5dp"
-            android:hint="Введите свое самочувствие"
-            android:textColor="@color/black" />
-    </LinearLayout>
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:visibility="visible"
+            >
+            <TextView
+                android:id="@+id/textHealth"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:text="Самочувствие:"
+                android:visibility="gone"
+                android:textColor="@color/black" />
 
-    <Button
-        android:id="@+id/saveTextButton"
-        android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:text="save" />
+            <EditText
+                android:id="@+id/textInputHealth"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:layout_marginLeft="5dp"
+                android:hint="Введите свое самочувствие"
+                android:visibility="gone"
+                android:textColor="@color/black" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            >
+            <Button
+                android:id="@+id/saveTextButton"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:text="@string/save"
+                />
+
+        </LinearLayout>
+
     </LinearLayout>
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:layout_weight="1"
         android:id="@+id/bottonnav"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
         app:menu="@menu/bottom_nav">
 
     </com.google.android.material.bottomnavigation.BottomNavigationView>
