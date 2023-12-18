@@ -2,5 +2,6 @@
     <string name="app_name">Health_Calendar</string>
     <string name="_1">Кнопка 1</string>
     <string name="statistic_label">Твоя статистика</string>
-    <string name="save">save</string>
+    <string name="save">Сохранить</string>
+    <string name="hint1">Введите давление</string>
 </resources>

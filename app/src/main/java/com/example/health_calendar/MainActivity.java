@@ -56,11 +56,10 @@ public class MainActivity extends AppCompatActivity {
         final TextView textSlepping = findViewById(R.id.textSlepping);
         final EditText textInputSlepping = findViewById(R.id.textInputSlepping);
 
-        final TextView textExercise = findViewById(R.id.textExercise);
-        final EditText textInputExercise = findViewById(R.id.textInputExercise);
-
         final TextView textHealth = findViewById(R.id.textHealth);
         final EditText textInputHealth = findViewById(R.id.textInputHealth);
+
+        final BottomNavigationView BottomNavigation = findViewById(R.id.bottomnav);
 
         final View dayInfo = findViewById(R.id.dayInfo);
         final View dayHeight = findViewById(R.id.dayHeight);
@@ -69,7 +68,7 @@ public class MainActivity extends AppCompatActivity {
         final View dayPressure = findViewById(R.id.dayPressure);
         final View dayAppetite = findViewById(R.id.dayAppetite);
         final View daySlepping = findViewById(R.id.daySlepping);
-        final View dayExercise = findViewById(R.id.dayExercise);
+
         final View dayHealth = findViewById(R.id.dayHealth);
 
         calendarView.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
@@ -79,16 +78,8 @@ public class MainActivity extends AppCompatActivity {
                 currentMonth = month;
                 currentDay = dayOfMonth;
 
-                if (dayInfo.getVisibility() == View.GONE &&
-                        dayHeight.getVisibility() == View.GONE &&
-                        dayWeight.getVisibility() == View.GONE &&
-                        dayPulse.getVisibility() == View.GONE &&
-                        dayPressure.getVisibility() == View.GONE &&
-                        dayAppetite.getVisibility() == View.GONE &&
-                        daySlepping.getVisibility() == View.GONE &&
-                        dayExercise.getVisibility() == View.GONE &&
-                        dayHealth.getVisibility() == View.GONE
-                ) {
+                if (dayInfo.getVisibility() == View.INVISIBLE)
+                {
                     dayInfo.setVisibility(View.VISIBLE);
                     dayHeight.setVisibility(View.VISIBLE);
                     dayWeight.setVisibility(View.VISIBLE);
@@ -96,7 +87,6 @@ public class MainActivity extends AppCompatActivity {
                     dayPressure.setVisibility(View.VISIBLE);
                     dayAppetite.setVisibility(View.VISIBLE);
                     daySlepping.setVisibility(View.VISIBLE);
-                    dayExercise.setVisibility(View.VISIBLE);
                     dayHealth.setVisibility(View.VISIBLE);
                 }
 
@@ -113,7 +103,7 @@ public class MainActivity extends AppCompatActivity {
                                         textInputPressure.setText(calendarStrings.get(i + 3));
                                         textInputAppetite.setText(calendarStrings.get(i + 4));
                                         textInputSlepping.setText(calendarStrings.get(i + 5));
-                                        textInputExercise.setText(calendarStrings.get(i + 6));
+
                                         textInputHealth.setText(calendarStrings.get(i + 7));
                                         return;
                                     }
@@ -128,7 +118,7 @@ public class MainActivity extends AppCompatActivity {
                 textInputPressure.setText("");
                 textInputAppetite.setText("");
                 textInputSlepping.setText("");
-                textInputExercise.setText("");
+
                 textInputHealth.setText("");
             }
         });
@@ -145,7 +135,6 @@ public class MainActivity extends AppCompatActivity {
                 months[monthsIndex] = currentMonth;
                 years[yearIndex] = currentYear;
                 calendarStrings.add(daysIndex, textInputHealth.getText().toString());
-                calendarStrings.add(daysIndex, textInputExercise.getText().toString());
                 calendarStrings.add(daysIndex, textInputSlepping.getText().toString());
                 calendarStrings.add(daysIndex, textInputAppetite.getText().toString());
                 calendarStrings.add(daysIndex, textInputPressure.getText().toString());
@@ -161,7 +150,6 @@ public class MainActivity extends AppCompatActivity {
                 textInputPressure.setText("");
                 textInputAppetite.setText("");
                 textInputSlepping.setText("");
-                textInputExercise.setText("");
                 textInputHealth.setText("");
             }
         });

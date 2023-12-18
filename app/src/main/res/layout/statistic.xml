@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-
-<FrameLayout
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
 
@@ -21,34 +20,33 @@
         android:text="@string/statistic_label"
         android:textAlignment="center"
         android:textColor="#000000"
-
         android:textSize="28sp" />
 
-    <FrameLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:gravity="center"
-        >
+        android:orientation="vertical"
+        android:gravity="center">
 
-        <ImageView
-            android:id="@+id/imageView"
-            android:layout_width="80dp"
-            android:layout_height="60dp"
-            android:layout_gravity="center"
-            android:background="@drawable/p2"
 
-            android:gravity="center" />
+        <com.github.mikephil.charting.charts.LineChart
+            android:id="@+id/lineChart"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            
+
+        </com.github.mikephil.charting.charts.LineChart>
 
         <Button
             android:id="@+id/firststat"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity=""
-
             android:text="@string/_1" />
 
-    </FrameLayout>
+    </LinearLayout>
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottonnav"
@@ -58,5 +56,4 @@
         app:menu="@menu/bottom_nav"
     />
 
-
-</FrameLayout>
+</LinearLayout>

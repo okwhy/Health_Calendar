@@ -2,15 +2,15 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
         android:title="Календарь"
-        android:id="@+id/dashbord"
-        android:icon="@drawable/dashbord"/>
+        android:id="@+id/homepage"
+        android:icon="@drawable/homepage_icon"/>
     <item
         android:title="Статистика"
-        android:id="@+id/users"
-        android:icon="@drawable/users"/>
+        android:id="@+id/statisticpage"
+        android:icon="@drawable/statisticpage_icon"/>
     <item
         android:title="Экспорт"
-        android:id="@+id/profile"
-        android:icon="@drawable/profile"/>
+        android:id="@+id/export"
+        android:icon="@drawable/exportpage_icon"/>
 </menu>
 
