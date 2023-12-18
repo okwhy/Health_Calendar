@@ -1,22 +1,161 @@
 package com.example.health_calendar;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.CalendarView;
+import android.widget.EditText;
+import android.widget.TextView;
 
 import java.io.*;
+import java.util.ArrayList;
+import java.util.List;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
-public class FirstFragment extends Fragment {
+public class FirstFragment extends Fragment{
 
     public FirstFragment(){
         // require a empty public constructor
     }
 
+    private int currentYear = 0;
+    private int currentMonth = 0;
+    private int currentDay = 0;
+
+    private int daysIndex = 0;
+    private int monthsIndex = 0;
+    private int yearIndex = 0;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_first, container, false);
+        View view = inflater.inflate(R.layout.fragment_first, container, false);
+
+        CalendarView calendarView = view.findViewById(R.id.calendarView_1);
+
+        final List<String> calendarStrings = new ArrayList<>();
+        final int[] days = new int[31];
+        final int[] months = new int[12];
+        final int[] years = new int[10];
+
+        final TextView textHeight = view.findViewById(R.id.textHeight);
+        final EditText textInputHeight = view.findViewById(R.id.textInputHeight);
+
+        final TextView textWeight = view.findViewById(R.id.textWeight);
+        final EditText textInputWeight = view.findViewById(R.id.textInputWeight);
+
+        final TextView textPulse = view.findViewById(R.id.textPulse);
+        final EditText textInputPulse = view.findViewById(R.id.textInputPulse);
+
+        final TextView textPressure = view.findViewById(R.id.textPressure);
+        final EditText textInputPressure = view.findViewById(R.id.textInputPressure);
+
+        final TextView textAppetite = view.findViewById(R.id.textAppetite);
+        final EditText textInputAppetite = view.findViewById(R.id.textInputAppetite);
+
+        final TextView textSlepping = view.findViewById(R.id.textSlepping);
+        final EditText textInputSlepping = view.findViewById(R.id.textInputSlepping);
+
+        final TextView textHealth = view.findViewById(R.id.textHealth);
+        final EditText textInputHealth = view.findViewById(R.id.textInputHealth);
+
+        final View dayInfo = view.findViewById(R.id.dayInfo);
+        final View dayHeight = view.findViewById(R.id.dayHeight);
+        final View dayWeight = view.findViewById(R.id.dayWeight);
+        final View dayPulse = view.findViewById(R.id.dayPulse);
+        final View dayPressure = view.findViewById(R.id.dayPressure);
+        final View dayAppetite = view.findViewById(R.id.dayAppetite);
+        final View daySlepping = view.findViewById(R.id.daySlepping);
+
+        final View dayHealth = view.findViewById(R.id.dayHealth);
+
+        calendarView.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
+            @Override
+            public void onSelectedDayChange(@NonNull CalendarView view, int year, int month, int dayOfMonth) {
+                currentYear = year;
+                currentMonth = month;
+                currentDay = dayOfMonth;
+
+                if (dayInfo.getVisibility() == View.INVISIBLE)
+                {
+                    dayInfo.setVisibility(View.VISIBLE);
+                    dayHeight.setVisibility(View.VISIBLE);
+                    dayWeight.setVisibility(View.VISIBLE);
+                    dayPulse.setVisibility(View.VISIBLE);
+                    dayPressure.setVisibility(View.VISIBLE);
+                    dayAppetite.setVisibility(View.VISIBLE);
+                    daySlepping.setVisibility(View.VISIBLE);
+                    dayHealth.setVisibility(View.VISIBLE);
+                }
+
+                for (int i = 0; i < 30; i++) {
+                    if (days[i] == currentDay) {
+                        for (int j = 0; j < 12; j++) {
+                            if (months[j] == currentMonth) {
+                                for (int k = 0; k < 10; k++) {
+                                    if (years[k] == currentYear) {
+                                        calendarView.setBackgroundColor(10);
+                                        textInputHeight.setText(calendarStrings.get(i));
+                                        textInputWeight.setText(calendarStrings.get(i + 1));
+                                        textInputPulse.setText(calendarStrings.get(i + 2));
+                                        textInputPressure.setText(calendarStrings.get(i + 3));
+                                        textInputAppetite.setText(calendarStrings.get(i + 4));
+                                        textInputSlepping.setText(calendarStrings.get(i + 5));
+                                        textInputHealth.setText(calendarStrings.get(i + 6));
+                                        return;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+                textInputHeight.setText("");
+                textInputWeight.setText("");
+                textInputPulse.setText("");
+                textInputPressure.setText("");
+                textInputAppetite.setText("");
+                textInputSlepping.setText("");
+
+                textInputHealth.setText("");
+            }
+        });
+
+
+        final Button saveTextButton = view.findViewById(R.id.saveTextButton_1);
+        saveTextButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                days[daysIndex] = currentDay;
+                months[monthsIndex] = currentMonth;
+                years[yearIndex] = currentYear;
+                calendarStrings.add(daysIndex, textInputHealth.getText().toString());
+                calendarStrings.add(daysIndex, textInputSlepping.getText().toString());
+                calendarStrings.add(daysIndex, textInputAppetite.getText().toString());
+                calendarStrings.add(daysIndex, textInputPressure.getText().toString());
+                calendarStrings.add(daysIndex, textInputPulse.getText().toString());
+                calendarStrings.add(daysIndex, textInputWeight.getText().toString());
+                calendarStrings.add(daysIndex, textInputHeight.getText().toString());
+                daysIndex++;
+                monthsIndex++;
+                yearIndex++;
+                textInputHeight.setText("");
+                textInputWeight.setText("");
+                textInputPulse.setText("");
+                textInputPressure.setText("");
+                textInputAppetite.setText("");
+                textInputSlepping.setText("");
+                textInputHealth.setText("");
+            }
+        });
+
+        return view;
     }
+
+
 }
