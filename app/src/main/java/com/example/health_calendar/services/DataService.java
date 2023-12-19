@@ -2,15 +2,13 @@ package com.example.health_calendar.services;
 
 import android.content.Context;
 
-import androidx.room.Room;
-
 import com.example.health_calendar.daos.DateDao;
 import com.example.health_calendar.daos.NoteDao;
 import com.example.health_calendar.database.AppDatabase;
-import com.example.health_calendar.entites.Date;
+import com.example.health_calendar.entites.DateSQL;
+import com.example.health_calendar.entites.DateWithNotes;
 import com.example.health_calendar.entites.Note;
 
-import java.lang.reflect.Array;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
@@ -42,14 +40,14 @@ public class DataService {
         dateDao = appDatabase.dateDao();
         noteDao = appDatabase.noteDao();
     }
-    public List<Date> GetAllData(){
+    public List<DateSQL> GetAllData(){
         return dateDao.getAll();
     }
-    public List<Date> GetByYear(byte year){
+    public List<DateSQL> GetByYear(byte year){
 
         return dateDao.getByYear(year);
     }
-    public List<Date> GetByMonth(byte year,byte month){
+    public List<DateSQL> GetByMonth(byte year, byte month){
 
         return dateDao.getByMonth(year,month);
     }
@@ -72,6 +70,8 @@ public class DataService {
 
         return null;
     }
-
+    public DateWithNotes getDate(byte year, byte mouth, byte day){
+        return dateDao.getDate(year, mouth, day);
+    }
 
 }

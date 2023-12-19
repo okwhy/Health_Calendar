@@ -1,6 +1,7 @@
 package com.example.health_calendar;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,19 +10,32 @@ import android.widget.CalendarView;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+
+import com.example.health_calendar.entites.DateSQL;
+import com.example.health_calendar.entites.DateWithNotes;
+import com.example.health_calendar.entites.Note;
+import com.example.health_calendar.services.DataService;
 
 public class CalendarFragment extends Fragment{
 
     public CalendarFragment(){
         // require a empty public constructor
     }
-
-    private int currentYear = 0;
+    private LocalDate curdate =null;
+    private Calendar calendar;
+    private int currentYear =0 ;
     private int currentMonth = 0;
     private int currentDay = 0;
 
@@ -29,13 +43,19 @@ public class CalendarFragment extends Fragment{
     private int monthsIndex = 0;
     private int yearIndex = 0;
 
+    private DataService dataService;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.calendar_page, container, false);
-
+        calendar=Calendar.getInstance();
+        curdate = LocalDateTime.ofInstant(calendar.toInstant(), calendar.getTimeZone().toZoneId()).toLocalDate();
+        currentDay=curdate.getDayOfMonth();
+        currentMonth=curdate.getMonthValue();
+        currentYear=curdate.getYear();
         CalendarView calendarView = view.findViewById(R.id.calendarView_1);
-
+        dataService=DataService.initial(this.getContext());
         final List<String> calendarStrings = new ArrayList<>();
         final int[] days = new int[31];
         final int[] months = new int[12];
@@ -72,13 +92,14 @@ public class CalendarFragment extends Fragment{
 
         final View dayHealth = view.findViewById(R.id.dayHealth);
 
+
         calendarView.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
             @Override
             public void onSelectedDayChange(@NonNull CalendarView view, int year, int month, int dayOfMonth) {
                 currentYear = year;
                 currentMonth = month;
                 currentDay = dayOfMonth;
-
+                List<Date> current_day =
                 if (dayInfo.getVisibility() == View.INVISIBLE)
                 {
                     dayInfo.setVisibility(View.VISIBLE);
@@ -154,5 +175,16 @@ public class CalendarFragment extends Fragment{
         return view;
     }
 
-
+    private Map<String,String> fetchDate(byte year, byte month, byte date){
+        DateWithNotes dateSQL=dataService.getDate(year, month, date);
+        List<Note> notes=dateSQL.notes;
+        Map<String,String> notesRes=new HashMap<>();
+        for(Note n:notes){
+            notesRes.put(n.getType(),n.getValue());
+        }
+        return notesRes;
+    }
+    private void setNotes(Map<String,String>notes,byte year, byte month, byte date){
+        boolean isold=DAYS.curdate LocalDate.of(year,month,date);
+    }
 }
