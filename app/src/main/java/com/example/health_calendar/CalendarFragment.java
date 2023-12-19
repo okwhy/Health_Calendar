@@ -99,7 +99,25 @@ public class CalendarFragment extends Fragment{
 
         final View dayHealth = view.findViewById(R.id.dayHealth);
 
-
+        Map<String,String> notes=fetchDate(currentYear,currentMonth,currentDay);
+        checkdate(currentYear,currentMonth,currentDay);
+        if (!(notes==null||notes.isEmpty())){
+            textInputHeight.setText(notes.get("HEIGHT")==null ?"Нет данных":notes.get("HEIGHT"));
+            textInputWeight.setText(notes.get("WEIGHT")==null ?"Нет данных":notes.get("WEIGHT"));
+            textInputPulse.setText(notes.get("PULSE")==null ?"Нет данных":notes.get("PULSE"));
+            textInputPressure.setText(notes.get("APPETITE")==null ?"Нет данных":notes.get("APPETITE"));
+            textInputAppetite.setText(notes.get("APPETITE")==null ?"Нет данных":notes.get("PULSE"));
+            textInputSlepping.setText(notes.get("SLEEP")==null ?"Нет данных":notes.get("SLEEP"));
+            textInputHealth.setText(notes.get("HEALTH")==null ?"Нет данных":notes.get("HEALTH"));
+        }else{
+            textInputHeight.setText("Нет данных");
+            textInputWeight.setText("Нет данных");
+            textInputPulse.setText("Нет данных");
+            textInputPressure.setText("Нет данных");
+            textInputAppetite.setText("Нет данных");
+            textInputSlepping.setText("Нет данных");
+            textInputHealth.setText("Нет данных");
+        }
         calendarView.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
             @Override
             public void onSelectedDayChange(@NonNull CalendarView view, int year, int month, int dayOfMonth) {
@@ -177,6 +195,9 @@ public class CalendarFragment extends Fragment{
                 if (!textInputWeight.getText().toString().equals("Нет данных")){
                     notes.put("WEIGHT",textInputWeight.getText().toString());
                 }
+                if (!textInputPressure.getText().toString().equals("Нет данных")){
+                    notes.put("PULSE",textInputWeight.getText().toString());
+                }
                 if (!textInputPulse.getText().toString().equals("Нет данных")){
                     notes.put("PULSE",textInputWeight.getText().toString());
                 }
@@ -209,9 +230,9 @@ public class CalendarFragment extends Fragment{
     private void checkdate(int year, int month, int date){
 
         LocalDate seldate=LocalDate.of(year,month,date);
-        Log.d("afafa",seldate.isAfter(curdate)+" ");
-        boolean noedit=seldate.isAfter(curdate) || DAYS.between(curdate,seldate)>3;
-        if (noedit){
+        Log.d("afafa",seldate.isAfter(curdate)+" "+DAYS.between(curdate,seldate));
+        boolean noedit=seldate.isAfter(curdate) || DAYS.between(curdate,seldate)<-3;
+        Log.d("afafa"," "+noedit);
             for (EditText t:texts){
                 t.setFocusable(!noedit);
                 t.setFocusableInTouchMode(!noedit);
@@ -219,6 +240,6 @@ public class CalendarFragment extends Fragment{
                 t.setLongClickable(!noedit);
                 t.setCursorVisible(!noedit);
             }
-        }
+
     }
 }
