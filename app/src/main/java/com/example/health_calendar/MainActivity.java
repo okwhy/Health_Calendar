@@ -3,22 +3,11 @@ package com.example.health_calendar;
 import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.Button;
-import android.widget.CalendarView;
-import android.widget.EditText;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment.*;
-import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.google.android.material.bottomnavigation.BottomNavigationView.OnNavigationItemSelectedListener;
-import com.google.android.material.navigation.NavigationBarView;
 
-import java.io.*;
-import java.util.ArrayList;
-import java.util.List;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class MainActivity extends AppCompatActivity
         implements BottomNavigationView.OnNavigationItemSelectedListener {
@@ -43,9 +32,9 @@ public class MainActivity extends AppCompatActivity
                 .setOnNavigationItemSelectedListener(this);
         bottomNavigationView.setSelectedItemId(R.id.homepage);
     }
-    FirstFragment firstFragment = new FirstFragment();
-    SecondFragment secondFragment = new SecondFragment();
-    ThirdFragment thirdFragment = new ThirdFragment();
+    CalendarFragment calendarFragment = new CalendarFragment();
+    StatisticFragment statisticFragment = new StatisticFragment();
+    ExportFragment exportFragment = new ExportFragment();
 
     @SuppressLint("NonConstantResourceId")
     @Override
@@ -55,19 +44,19 @@ public class MainActivity extends AppCompatActivity
         if (item.getItemId() == Calendar_page) {
             getSupportFragmentManager()
                     .beginTransaction()
-                    .replace(R.id.flFragment, firstFragment)
+                    .replace(R.id.flFragment, calendarFragment)
                     .commit();
             return true;
         } else if (item.getItemId() == Statistic_page) {
             getSupportFragmentManager()
                     .beginTransaction()
-                    .replace(R.id.flFragment, secondFragment)
+                    .replace(R.id.flFragment, statisticFragment)
                     .commit();
             return true;
         } else if (item.getItemId() == Export_page) {
             getSupportFragmentManager()
                     .beginTransaction()
-                    .replace(R.id.flFragment, thirdFragment)
+                    .replace(R.id.flFragment, exportFragment)
                     .commit();
             return true;
         } else

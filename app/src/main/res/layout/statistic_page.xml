@@ -19,8 +19,8 @@
 
         android:text="@string/statistic_label"
         android:textAlignment="center"
-        android:textColor="#000000"
-        android:textSize="28sp" />
+        android:textColor="#28b140"
+        android:textSize="28sp"/>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -35,7 +35,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            
+
 
         </com.github.mikephil.charting.charts.LineChart>
 
@@ -47,13 +47,5 @@
             android:text="@string/_1" />
 
     </LinearLayout>
-
-    <com.google.android.material.bottomnavigation.BottomNavigationView
-        android:id="@+id/bottonnav"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom"
-        app:menu="@menu/bottom_nav"
-    />
 
 </LinearLayout>

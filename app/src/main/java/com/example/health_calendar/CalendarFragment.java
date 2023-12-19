@@ -1,6 +1,5 @@
 package com.example.health_calendar;
 
-import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,17 +9,15 @@ import android.widget.CalendarView;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
-public class FirstFragment extends Fragment{
+public class CalendarFragment extends Fragment{
 
-    public FirstFragment(){
+    public CalendarFragment(){
         // require a empty public constructor
     }
 
@@ -35,7 +32,7 @@ public class FirstFragment extends Fragment{
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_first, container, false);
+        View view = inflater.inflate(R.layout.calendar_page, container, false);
 
         CalendarView calendarView = view.findViewById(R.id.calendarView_1);
 

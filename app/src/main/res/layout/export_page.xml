@@ -8,17 +8,31 @@
     tools:context=".MainActivity">
 
     <TextView
-        android:id="@+id/secondFragment"
+        android:id="@+id/thirdFragment"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Data Structures"
+        android:text="Экспорт в Excel"
         android:textColor="#43a047"
-        android:textSize="40sp"
+        android:textSize="28sp"
         android:textStyle="italic|bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.023" />
+
+
+    <Button
+        android:id="@+id/firststat"
+        android:layout_width="171dp"
+        android:layout_height="76dp"
+        android:text="Экспортировать"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.314" />
+    />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
