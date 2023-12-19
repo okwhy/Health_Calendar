@@ -69,8 +69,31 @@ public class DataService {
 
         return null;
     }
-    public DateWithNotes getDate(byte year, byte mouth, byte day){
+    public DateWithNotes getDate(int year, byte mouth, byte day){
         return dateDao.getDate(year, mouth, day);
     }
+    public DateSQL getDateNoNotes(int year, byte mouth, byte day){
+        return dateDao.getDateNoNotes(year, mouth, day);
+    }
+    public long insertDate(int year, byte mouth, byte day){
+        return dateDao.insert(new DateSQL(year,mouth,day));
+    }
+    public long insertOrUpdateNote(Note note){
+        Note note1=noteDao.getByCatAndFKId(note.getType(),note.getId_fkdate());
+        if (note1!= null){
+            note1.setValue(note.getValue());
+            noteDao.update(note1);
+            return note1.getId();
+        }else{
+            noteDao.insert(note);
+            return note.getId();
+        }
 
+    }
+    public List<Note>getAllNoteTest(){
+        return noteDao.getAll();
+    }
+    public List<DateSQL>getAllDateTest(){
+        return dateDao.getAll();
+    }
 }

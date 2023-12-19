@@ -14,11 +14,9 @@ import android.widget.TextView;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -54,10 +52,11 @@ public class CalendarFragment extends Fragment{
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.calendar_page, container, false);
         calendar=Calendar.getInstance();
-        curdate = LocalDateTime.ofInstant(calendar.toInstant(), calendar.getTimeZone().toZoneId()).toLocalDate();
-        currentDay=curdate.getDayOfMonth();
-        currentMonth=curdate.getMonthValue();
-        currentYear=curdate.getYear();
+        curdate = LocalDateTime.now().toLocalDate();
+        Log.d("sdfaf",curdate.getYear()+"");
+        currentDay=  curdate.getDayOfMonth();
+        currentMonth=  curdate.getMonthValue();
+        currentYear=  curdate.getYear();
         CalendarView calendarView = view.findViewById(R.id.calendarView_1);
         dataService=DataService.initial(this.getContext());
         final List<String> calendarStrings = new ArrayList<>();
@@ -121,9 +120,9 @@ public class CalendarFragment extends Fragment{
         calendarView.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
             @Override
             public void onSelectedDayChange(@NonNull CalendarView view, int year, int month, int dayOfMonth) {
-                currentYear = year;
-                currentMonth = month+1;
-                currentDay = dayOfMonth;
+                currentYear =  year;
+                currentMonth =  (month+1);
+                currentDay =  dayOfMonth;
                 if (dayInfo.getVisibility() == View.INVISIBLE)
                 {
                     dayInfo.setVisibility(View.VISIBLE);
@@ -182,37 +181,75 @@ public class CalendarFragment extends Fragment{
 
 
         final Button saveTextButton = view.findViewById(R.id.saveTextButton_1);
-        saveTextButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Map<String,String> notes=new HashMap<>();
-                if (!textInputHeight.getText().toString().equals("Нет данных")){
-                   notes.put("HEIGHT",textInputHeight.getText().toString());
-                }
-                if (!textInputWeight.getText().toString().equals("Нет данных")){
-                    notes.put("WEIGHT",textInputWeight.getText().toString());
-                }
-                if (!textInputWeight.getText().toString().equals("Нет данных")){
-                    notes.put("WEIGHT",textInputWeight.getText().toString());
-                }
-                if (!textInputPressure.getText().toString().equals("Нет данных")){
-                    notes.put("PULSE",textInputWeight.getText().toString());
-                }
-                if (!textInputPulse.getText().toString().equals("Нет данных")){
-                    notes.put("PULSE",textInputWeight.getText().toString());
-                }
-
+        saveTextButton.setOnClickListener(v -> {
+            Log.d("afa","afgbrfdefgrtfdsdfg");
+            Map<String,String> notes1 =new HashMap<>();
+            if (!textInputHeight.getText().toString().equals("Нет данных")){
+               notes1.put("HEIGHT",textInputHeight.getText().toString());
             }
+            if (!textInputWeight.getText().toString().equals("Нет данных")){
+                notes1.put("WEIGHT",textInputWeight.getText().toString());
+            }
+            if (!textInputWeight.getText().toString().equals("Нет данных")){
+                notes1.put("WEIGHT",textInputWeight.getText().toString());
+            }
+            if (!textInputPressure.getText().toString().equals("Нет данных")){
+                notes1.put("PULSE",textInputPressure.getText().toString());
+            }
+            if (!textInputSlepping.getText().toString().equals("Нет данных")){
+                notes1.put("SLEEP",textInputSlepping.getText().toString());
+            }
+            if (!textInputHealth.getText().toString().equals("Нет данных")){
+                notes1.put("HEALTH",textInputHealth.getText().toString());
+            }
+            Log.d("dafa",notes1.toString());
+            insertorupdateDate(notes1,currentYear,currentMonth,currentDay);
         });
 
         return view;
 
     }
+    private void insertorupdateDate(Map<String,String> notes, int year, int month, int date){
+        final DateSQL[] ref = new DateSQL[1];
+        Runnable runnable = () -> {
+            ref[0] =dataService.getDateNoNotes( year, (byte) month, (byte) date);
+        };
+        Thread thread =new Thread(runnable);
+        thread.start();
+        final long[] id = new long[1];
+        if(ref[0]==null) {
+            runnable = () -> {
+                id[0] =dataService.insertDate( year, (byte) month, (byte) date);
+            };
+            Thread thread2 =new Thread(runnable);
+            thread2.start();
+        };
+        List<Note>noteslist=new ArrayList<>();
+        for (String n:
+             notes.keySet()) {
+            noteslist.add(new Note(n,notes.get(n),id[0]));
+        }
+        for (Note n:
+             noteslist) {
+            runnable = () -> {
+                Long a=dataService.insertOrUpdateNote(n);
+                Log.d("afa",a+"  efafarfa");
+            };
+            Thread thread2 =new Thread(runnable);
+            thread2.start();
+        }
+        runnable = () -> {
+            Log.d("plsfaffa"," "+dataService.getAllNoteTest());
+            Log.d("plsfaffa"," "+dataService.getAllDateTest());
+        };
+        Thread thread2 =new Thread(runnable);
+        thread2.start();
 
+    }
     private Map<String,String> fetchDate(int year, int month, int date){
         final DateWithNotes[] dateSQL = new DateWithNotes[1];
         Runnable runnable = () -> {
-             dateSQL[0] = dataService.getDate((byte) year, (byte) month, (byte) date);
+             dateSQL[0] = dataService.getDate(year, (byte) month, (byte) date);
         };
         Thread thread =new Thread(runnable);
         thread.start();
@@ -230,7 +267,7 @@ public class CalendarFragment extends Fragment{
     private void checkdate(int year, int month, int date){
 
         LocalDate seldate=LocalDate.of(year,month,date);
-        Log.d("afafa",seldate.isAfter(curdate)+" "+DAYS.between(curdate,seldate));
+        Log.d("afafa",seldate+" "+curdate);
         boolean noedit=seldate.isAfter(curdate) || DAYS.between(curdate,seldate)<-3;
         Log.d("afafa"," "+noedit);
             for (EditText t:texts){

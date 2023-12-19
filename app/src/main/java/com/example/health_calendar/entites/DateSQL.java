@@ -1,7 +1,6 @@
 package com.example.health_calendar.entites;
 
 import androidx.room.Entity;
-import androidx.room.ForeignKey;
 import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
@@ -9,9 +8,7 @@ import androidx.room.PrimaryKey;
 import java.io.Serializable;
 
 import lombok.AllArgsConstructor;
-import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 import lombok.ToString;
 
 @NoArgsConstructor
@@ -21,9 +18,16 @@ import lombok.ToString;
 public class DateSQL implements Serializable {
     @PrimaryKey(autoGenerate = true)
     private long id = 0;
-    private byte year;
+    private int year;
     private byte month;
     private byte day;
+
+    public DateSQL(int year, byte month, byte day) {
+        this.year = year;
+        this.month = month;
+        this.day = day;
+    }
+
     @Ignore
     public String getDateString(){
         return day+"-"+month+"-"+year;
@@ -37,7 +41,7 @@ public class DateSQL implements Serializable {
         this.id = id;
     }
 
-    public byte getYear() {
+    public int getYear() {
         return year;
     }
 

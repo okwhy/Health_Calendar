@@ -17,6 +17,12 @@ import lombok.ToString;
 @ToString
 @Entity
 public class Note implements Serializable {
+    public Note(String type, String value, long id_fkdate) {
+        this.type = type;
+        this.value = value;
+        this.id_fkdate = id_fkdate;
+    }
+
     public long getId() {
         return id;
     }
