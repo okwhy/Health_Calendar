@@ -4,21 +4,30 @@ import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.Query;
+import androidx.room.Transaction;
 
-import com.example.health_calendar.entites.Date;
+import com.example.health_calendar.entites.DateSQL;
+import com.example.health_calendar.entites.DateWithNotes;
 
 import java.util.List;
 
 @Dao
 public interface DateDao {
-    @Query("select * from date")
-    List<Date> getAll();
+    @Query("select * from DateSQL")
+    List<DateSQL> getAll();
     @Delete
-    void delete(Date ... dates);
+    void delete(DateSQL... dates);
     @Insert
-    long insert(Date date);
-    @Query("select * from date where date.year =:year order by month,day")
-    List<Date>getByYear(byte year);
-    @Query("select * from date where date.year =:year and date.month =:month order by day")
-    List<Date>getByMonth(byte year,byte month);
+    long insert(DateSQL dateSQL);
+    @Query("select * from DateSQL where DateSQL.year =:year order by month,day")
+    List<DateSQL>getByYear(byte year);
+    @Query("select * from DateSQL where DateSQL.year =:year and DateSQL.month =:month order by day")
+    List<DateSQL>getByMonth(byte year, byte month);
+    @Query("SELECT * FROM DateSQL WHERE DateSQL.year BETWEEN :byear AND :ayear AND " +
+            "DateSQL.month BETWEEN :bmonth and :amonth AND DateSQL.day BETWEEN" +
+            ":bdate and :adate")
+    List<DateSQL>getBetween(byte byear, byte ayear, byte bmonth, byte amonth, byte bdate, byte adate);
+
+    @Query("select * from DateSQL where DateSQL.year =:year and DateSQL.month =:month and DateSQL.day =:day")
+    DateWithNotes getDate(byte year, byte month, byte day);
 }

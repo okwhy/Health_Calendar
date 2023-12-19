@@ -8,10 +8,10 @@ import androidx.room.RoomDatabase;
 
 import com.example.health_calendar.daos.DateDao;
 import com.example.health_calendar.daos.NoteDao;
-import com.example.health_calendar.entites.Date;
+import com.example.health_calendar.entites.DateSQL;
 import com.example.health_calendar.entites.Note;
 
-@Database(entities = {Date.class, Note.class}, version = 1, exportSchema = false)
+@Database(entities = {DateSQL.class, Note.class}, version = 1, exportSchema = false)
 public abstract class AppDatabase extends RoomDatabase {
     public abstract DateDao dateDao();
     public abstract NoteDao noteDao();

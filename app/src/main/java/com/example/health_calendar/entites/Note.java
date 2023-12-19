@@ -15,16 +15,46 @@ import lombok.ToString;
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
-@Setter
-@Getter
-@Entity(foreignKeys = @ForeignKey
-        (entity = Date.class, parentColumns = "id", childColumns = "id_fkdate",onDelete = ForeignKey.CASCADE))
+@Entity
 public class Note implements Serializable {
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public String getValue() {
+        return value;
+    }
+
+    public void setValue(String value) {
+        this.value = value;
+    }
+
+    public long getId_fkdate() {
+        return id_fkdate;
+    }
+
+
     @PrimaryKey(autoGenerate = true)
     private long id = 0;
 
     private String type;
     private String value;
+
+    public void setId_fkdate(long id_fkdate) {
+        this.id_fkdate = id_fkdate;
+    }
 
     private long id_fkdate;
 }

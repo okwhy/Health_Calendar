@@ -1,6 +1,9 @@
 package com.example.health_calendar;
 
+import static java.time.temporal.ChronoUnit.DAYS;
+
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,19 +12,33 @@ import android.widget.CalendarView;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+
+import com.example.health_calendar.entites.DateSQL;
+import com.example.health_calendar.entites.DateWithNotes;
+import com.example.health_calendar.entites.Note;
+import com.example.health_calendar.services.DataService;
 
 public class CalendarFragment extends Fragment{
 
     public CalendarFragment(){
         // require a empty public constructor
     }
-
-    private int currentYear = 0;
+    private LocalDate curdate =null;
+    private Calendar calendar;
+    private int currentYear =0 ;
     private int currentMonth = 0;
     private int currentDay = 0;
 
@@ -29,13 +46,20 @@ public class CalendarFragment extends Fragment{
     private int monthsIndex = 0;
     private int yearIndex = 0;
 
+    private DataService dataService;
+    private List<EditText> texts;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.calendar_page, container, false);
-
+        calendar=Calendar.getInstance();
+        curdate = LocalDateTime.ofInstant(calendar.toInstant(), calendar.getTimeZone().toZoneId()).toLocalDate();
+        currentDay=curdate.getDayOfMonth();
+        currentMonth=curdate.getMonthValue();
+        currentYear=curdate.getYear();
         CalendarView calendarView = view.findViewById(R.id.calendarView_1);
-
+        dataService=DataService.initial(this.getContext());
         final List<String> calendarStrings = new ArrayList<>();
         final int[] days = new int[31];
         final int[] months = new int[12];
@@ -62,6 +86,9 @@ public class CalendarFragment extends Fragment{
         final TextView textHealth = view.findViewById(R.id.textHealth);
         final EditText textInputHealth = view.findViewById(R.id.textInputHealth);
 
+        texts= new ArrayList<>(Arrays.asList(textInputHeight,textInputWeight,textInputPulse,textInputPressure
+                ,textInputAppetite,textInputSlepping,textInputHealth));
+
         final View dayInfo = view.findViewById(R.id.dayInfo);
         final View dayHeight = view.findViewById(R.id.dayHeight);
         final View dayWeight = view.findViewById(R.id.dayWeight);
@@ -72,13 +99,31 @@ public class CalendarFragment extends Fragment{
 
         final View dayHealth = view.findViewById(R.id.dayHealth);
 
+        Map<String,String> notes=fetchDate(currentYear,currentMonth,currentDay);
+        checkdate(currentYear,currentMonth,currentDay);
+        if (!(notes==null||notes.isEmpty())){
+            textInputHeight.setText(notes.get("HEIGHT")==null ?"Нет данных":notes.get("HEIGHT"));
+            textInputWeight.setText(notes.get("WEIGHT")==null ?"Нет данных":notes.get("WEIGHT"));
+            textInputPulse.setText(notes.get("PULSE")==null ?"Нет данных":notes.get("PULSE"));
+            textInputPressure.setText(notes.get("APPETITE")==null ?"Нет данных":notes.get("APPETITE"));
+            textInputAppetite.setText(notes.get("APPETITE")==null ?"Нет данных":notes.get("PULSE"));
+            textInputSlepping.setText(notes.get("SLEEP")==null ?"Нет данных":notes.get("SLEEP"));
+            textInputHealth.setText(notes.get("HEALTH")==null ?"Нет данных":notes.get("HEALTH"));
+        }else{
+            textInputHeight.setText("Нет данных");
+            textInputWeight.setText("Нет данных");
+            textInputPulse.setText("Нет данных");
+            textInputPressure.setText("Нет данных");
+            textInputAppetite.setText("Нет данных");
+            textInputSlepping.setText("Нет данных");
+            textInputHealth.setText("Нет данных");
+        }
         calendarView.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
             @Override
             public void onSelectedDayChange(@NonNull CalendarView view, int year, int month, int dayOfMonth) {
                 currentYear = year;
-                currentMonth = month;
+                currentMonth = month+1;
                 currentDay = dayOfMonth;
-
                 if (dayInfo.getVisibility() == View.INVISIBLE)
                 {
                     dayInfo.setVisibility(View.VISIBLE);
@@ -112,14 +157,26 @@ public class CalendarFragment extends Fragment{
                         }
                     }
                 }
-                textInputHeight.setText("");
-                textInputWeight.setText("");
-                textInputPulse.setText("");
-                textInputPressure.setText("");
-                textInputAppetite.setText("");
-                textInputSlepping.setText("");
+                Map<String,String> notes=fetchDate(currentYear,currentMonth,currentDay);
+                checkdate(currentYear,currentMonth,currentDay);
+                if (!(notes==null||notes.isEmpty())){
+                    textInputHeight.setText(notes.get("HEIGHT")==null ?"Нет данных":notes.get("HEIGHT"));
+                    textInputWeight.setText(notes.get("WEIGHT")==null ?"Нет данных":notes.get("WEIGHT"));
+                    textInputPulse.setText(notes.get("PULSE")==null ?"Нет данных":notes.get("PULSE"));
+                    textInputPressure.setText(notes.get("APPETITE")==null ?"Нет данных":notes.get("APPETITE"));
+                    textInputAppetite.setText(notes.get("APPETITE")==null ?"Нет данных":notes.get("PULSE"));
+                    textInputSlepping.setText(notes.get("SLEEP")==null ?"Нет данных":notes.get("SLEEP"));
+                    textInputHealth.setText(notes.get("HEALTH")==null ?"Нет данных":notes.get("HEALTH"));
+                }else{
+                    textInputHeight.setText("Нет данных");
+                    textInputWeight.setText("Нет данных");
+                    textInputPulse.setText("Нет данных");
+                    textInputPressure.setText("Нет данных");
+                    textInputAppetite.setText("Нет данных");
+                    textInputSlepping.setText("Нет данных");
+                    textInputHealth.setText("Нет данных");
+                }
 
-                textInputHealth.setText("");
             }
         });
 
@@ -128,31 +185,61 @@ public class CalendarFragment extends Fragment{
         saveTextButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                days[daysIndex] = currentDay;
-                months[monthsIndex] = currentMonth;
-                years[yearIndex] = currentYear;
-                calendarStrings.add(daysIndex, textInputHealth.getText().toString());
-                calendarStrings.add(daysIndex, textInputSlepping.getText().toString());
-                calendarStrings.add(daysIndex, textInputAppetite.getText().toString());
-                calendarStrings.add(daysIndex, textInputPressure.getText().toString());
-                calendarStrings.add(daysIndex, textInputPulse.getText().toString());
-                calendarStrings.add(daysIndex, textInputWeight.getText().toString());
-                calendarStrings.add(daysIndex, textInputHeight.getText().toString());
-                daysIndex++;
-                monthsIndex++;
-                yearIndex++;
-                textInputHeight.setText("");
-                textInputWeight.setText("");
-                textInputPulse.setText("");
-                textInputPressure.setText("");
-                textInputAppetite.setText("");
-                textInputSlepping.setText("");
-                textInputHealth.setText("");
+                Map<String,String> notes=new HashMap<>();
+                if (!textInputHeight.getText().toString().equals("Нет данных")){
+                   notes.put("HEIGHT",textInputHeight.getText().toString());
+                }
+                if (!textInputWeight.getText().toString().equals("Нет данных")){
+                    notes.put("WEIGHT",textInputWeight.getText().toString());
+                }
+                if (!textInputWeight.getText().toString().equals("Нет данных")){
+                    notes.put("WEIGHT",textInputWeight.getText().toString());
+                }
+                if (!textInputPressure.getText().toString().equals("Нет данных")){
+                    notes.put("PULSE",textInputWeight.getText().toString());
+                }
+                if (!textInputPulse.getText().toString().equals("Нет данных")){
+                    notes.put("PULSE",textInputWeight.getText().toString());
+                }
+
             }
         });
 
         return view;
+
     }
 
+    private Map<String,String> fetchDate(int year, int month, int date){
+        final DateWithNotes[] dateSQL = new DateWithNotes[1];
+        Runnable runnable = () -> {
+             dateSQL[0] = dataService.getDate((byte) year, (byte) month, (byte) date);
+        };
+        Thread thread =new Thread(runnable);
+        thread.start();
+        if(dateSQL[0]==null){
+            return null;
+        }
+        List<Note> notes= dateSQL[0].notes;
+        Map<String,String> notesRes=new HashMap<>();
+        for(Note n:notes){
+            notesRes.put(n.getType(),n.getValue());
+        }
+        Thread.currentThread().interrupt();
+        return notesRes;
+    }
+    private void checkdate(int year, int month, int date){
 
+        LocalDate seldate=LocalDate.of(year,month,date);
+        Log.d("afafa",seldate.isAfter(curdate)+" "+DAYS.between(curdate,seldate));
+        boolean noedit=seldate.isAfter(curdate) || DAYS.between(curdate,seldate)<-3;
+        Log.d("afafa"," "+noedit);
+            for (EditText t:texts){
+                t.setFocusable(!noedit);
+                t.setFocusableInTouchMode(!noedit);
+                t.setClickable(!noedit);
+                t.setLongClickable(!noedit);
+                t.setCursorVisible(!noedit);
+            }
+
+    }
 }
