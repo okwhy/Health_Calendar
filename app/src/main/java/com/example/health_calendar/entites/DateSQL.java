@@ -17,8 +17,7 @@ import lombok.ToString;
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
-@Entity(foreignKeys = @ForeignKey
-        (entity = Note.class, parentColumns = "id", childColumns = "id_fkdate",onDelete = ForeignKey.CASCADE))
+@Entity
 public class DateSQL implements Serializable {
     @PrimaryKey(autoGenerate = true)
     private long id = 0;

@@ -52,5 +52,9 @@ public class Note implements Serializable {
     private String type;
     private String value;
 
+    public void setId_fkdate(long id_fkdate) {
+        this.id_fkdate = id_fkdate;
+    }
+
     private long id_fkdate;
 }

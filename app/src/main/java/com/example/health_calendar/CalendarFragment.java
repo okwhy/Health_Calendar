@@ -104,7 +104,7 @@ public class CalendarFragment extends Fragment{
             @Override
             public void onSelectedDayChange(@NonNull CalendarView view, int year, int month, int dayOfMonth) {
                 currentYear = year;
-                currentMonth = month;
+                currentMonth = month+1;
                 currentDay = dayOfMonth;
                 if (dayInfo.getVisibility() == View.INVISIBLE)
                 {
@@ -141,7 +141,7 @@ public class CalendarFragment extends Fragment{
                 }
                 Map<String,String> notes=fetchDate(currentYear,currentMonth,currentDay);
                 checkdate(currentYear,currentMonth,currentDay);
-                if (notes==null||notes.isEmpty()){
+                if (!(notes==null||notes.isEmpty())){
                     textInputHeight.setText(notes.get("HEIGHT")==null ?"Нет данных":notes.get("HEIGHT"));
                     textInputWeight.setText(notes.get("WEIGHT")==null ?"Нет данных":notes.get("WEIGHT"));
                     textInputPulse.setText(notes.get("PULSE")==null ?"Нет данных":notes.get("PULSE"));
@@ -164,24 +164,53 @@ public class CalendarFragment extends Fragment{
 
 
         final Button saveTextButton = view.findViewById(R.id.saveTextButton_1);
+        saveTextButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Map<String,String> notes=new HashMap<>();
+                if (!textInputHeight.getText().toString().equals("Нет данных")){
+                   notes.put("HEIGHT",textInputHeight.getText().toString());
+                }
+                if (!textInputWeight.getText().toString().equals("Нет данных")){
+                    notes.put("WEIGHT",textInputWeight.getText().toString());
+                }
+                if (!textInputWeight.getText().toString().equals("Нет данных")){
+                    notes.put("WEIGHT",textInputWeight.getText().toString());
+                }
+                if (!textInputPulse.getText().toString().equals("Нет данных")){
+                    notes.put("PULSE",textInputWeight.getText().toString());
+                }
 
+            }
+        });
 
         return view;
 
     }
 
     private Map<String,String> fetchDate(int year, int month, int date){
-        DateWithNotes dateSQL=dataService.getDate((byte) year, (byte) month, (byte) date);
-        List<Note> notes=dateSQL.notes;
+        final DateWithNotes[] dateSQL = new DateWithNotes[1];
+        Runnable runnable = () -> {
+             dateSQL[0] = dataService.getDate((byte) year, (byte) month, (byte) date);
+        };
+        Thread thread =new Thread(runnable);
+        thread.start();
+        if(dateSQL[0]==null){
+            return null;
+        }
+        List<Note> notes= dateSQL[0].notes;
         Map<String,String> notesRes=new HashMap<>();
         for(Note n:notes){
             notesRes.put(n.getType(),n.getValue());
         }
+        Thread.currentThread().interrupt();
         return notesRes;
     }
     private void checkdate(int year, int month, int date){
+
         LocalDate seldate=LocalDate.of(year,month,date);
-        boolean noedit=seldate.isAfter(curdate) && DAYS.between(curdate,seldate)>3;
+        Log.d("afafa",seldate.isAfter(curdate)+" ");
+        boolean noedit=seldate.isAfter(curdate) || DAYS.between(curdate,seldate)>3;
         if (noedit){
             for (EditText t:texts){
                 t.setFocusable(!noedit);

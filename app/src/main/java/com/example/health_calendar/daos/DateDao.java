@@ -4,6 +4,7 @@ import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.Query;
+import androidx.room.Transaction;
 
 import com.example.health_calendar.entites.DateSQL;
 import com.example.health_calendar.entites.DateWithNotes;
@@ -26,6 +27,7 @@ public interface DateDao {
             "DateSQL.month BETWEEN :bmonth and :amonth AND DateSQL.day BETWEEN" +
             ":bdate and :adate")
     List<DateSQL>getBetween(byte byear, byte ayear, byte bmonth, byte amonth, byte bdate, byte adate);
-    @Query("select * from DateSQL where DateSQL.year =:year and DateSQL.month =:month and DateSQL.day")
+
+    @Query("select * from DateSQL where DateSQL.year =:year and DateSQL.month =:month and DateSQL.day =:day")
     DateWithNotes getDate(byte year, byte month, byte day);
 }
