@@ -22,30 +22,7 @@
         android:textColor="#28b140"
         android:textSize="28sp"/>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:orientation="vertical"
-        android:gravity="center">
 
 
-        <com.github.mikephil.charting.charts.LineChart
-            android:id="@+id/lineChart"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-
-
-        </com.github.mikephil.charting.charts.LineChart>
-
-        <Button
-            android:id="@+id/firststat"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity=""
-            android:text="@string/_1" />
-
-    </LinearLayout>
 
 </LinearLayout>
