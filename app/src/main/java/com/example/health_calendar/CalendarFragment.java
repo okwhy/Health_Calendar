@@ -1,5 +1,7 @@
 package com.example.health_calendar;
 
+import static java.time.temporal.ChronoUnit.DAYS;
+
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -14,6 +16,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
@@ -44,6 +47,7 @@ public class CalendarFragment extends Fragment{
     private int yearIndex = 0;
 
     private DataService dataService;
+    private List<EditText> texts;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -82,6 +86,9 @@ public class CalendarFragment extends Fragment{
         final TextView textHealth = view.findViewById(R.id.textHealth);
         final EditText textInputHealth = view.findViewById(R.id.textInputHealth);
 
+        texts= new ArrayList<>(Arrays.asList(textInputHeight,textInputWeight,textInputPulse,textInputPressure
+                ,textInputAppetite,textInputSlepping,textInputHealth));
+
         final View dayInfo = view.findViewById(R.id.dayInfo);
         final View dayHeight = view.findViewById(R.id.dayHeight);
         final View dayWeight = view.findViewById(R.id.dayWeight);
@@ -99,7 +106,6 @@ public class CalendarFragment extends Fragment{
                 currentYear = year;
                 currentMonth = month;
                 currentDay = dayOfMonth;
-                List<Date> current_day =
                 if (dayInfo.getVisibility() == View.INVISIBLE)
                 {
                     dayInfo.setVisibility(View.VISIBLE);
@@ -133,50 +139,39 @@ public class CalendarFragment extends Fragment{
                         }
                     }
                 }
-                textInputHeight.setText("");
-                textInputWeight.setText("");
-                textInputPulse.setText("");
-                textInputPressure.setText("");
-                textInputAppetite.setText("");
-                textInputSlepping.setText("");
+                Map<String,String> notes=fetchDate(currentYear,currentMonth,currentDay);
+                checkdate(currentYear,currentMonth,currentDay);
+                if (notes==null||notes.isEmpty()){
+                    textInputHeight.setText(notes.get("HEIGHT")==null ?"Нет данных":notes.get("HEIGHT"));
+                    textInputWeight.setText(notes.get("WEIGHT")==null ?"Нет данных":notes.get("WEIGHT"));
+                    textInputPulse.setText(notes.get("PULSE")==null ?"Нет данных":notes.get("PULSE"));
+                    textInputPressure.setText(notes.get("APPETITE")==null ?"Нет данных":notes.get("APPETITE"));
+                    textInputAppetite.setText(notes.get("APPETITE")==null ?"Нет данных":notes.get("PULSE"));
+                    textInputSlepping.setText(notes.get("SLEEP")==null ?"Нет данных":notes.get("SLEEP"));
+                    textInputHealth.setText(notes.get("HEALTH")==null ?"Нет данных":notes.get("HEALTH"));
+                }else{
+                    textInputHeight.setText("Нет данных");
+                    textInputWeight.setText("Нет данных");
+                    textInputPulse.setText("Нет данных");
+                    textInputPressure.setText("Нет данных");
+                    textInputAppetite.setText("Нет данных");
+                    textInputSlepping.setText("Нет данных");
+                    textInputHealth.setText("Нет данных");
+                }
 
-                textInputHealth.setText("");
             }
         });
 
 
         final Button saveTextButton = view.findViewById(R.id.saveTextButton_1);
-        saveTextButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                days[daysIndex] = currentDay;
-                months[monthsIndex] = currentMonth;
-                years[yearIndex] = currentYear;
-                calendarStrings.add(daysIndex, textInputHealth.getText().toString());
-                calendarStrings.add(daysIndex, textInputSlepping.getText().toString());
-                calendarStrings.add(daysIndex, textInputAppetite.getText().toString());
-                calendarStrings.add(daysIndex, textInputPressure.getText().toString());
-                calendarStrings.add(daysIndex, textInputPulse.getText().toString());
-                calendarStrings.add(daysIndex, textInputWeight.getText().toString());
-                calendarStrings.add(daysIndex, textInputHeight.getText().toString());
-                daysIndex++;
-                monthsIndex++;
-                yearIndex++;
-                textInputHeight.setText("");
-                textInputWeight.setText("");
-                textInputPulse.setText("");
-                textInputPressure.setText("");
-                textInputAppetite.setText("");
-                textInputSlepping.setText("");
-                textInputHealth.setText("");
-            }
-        });
+
 
         return view;
+
     }
 
-    private Map<String,String> fetchDate(byte year, byte month, byte date){
-        DateWithNotes dateSQL=dataService.getDate(year, month, date);
+    private Map<String,String> fetchDate(int year, int month, int date){
+        DateWithNotes dateSQL=dataService.getDate((byte) year, (byte) month, (byte) date);
         List<Note> notes=dateSQL.notes;
         Map<String,String> notesRes=new HashMap<>();
         for(Note n:notes){
@@ -184,7 +179,17 @@ public class CalendarFragment extends Fragment{
         }
         return notesRes;
     }
-    private void setNotes(Map<String,String>notes,byte year, byte month, byte date){
-        boolean isold=DAYS.curdate LocalDate.of(year,month,date);
+    private void checkdate(int year, int month, int date){
+        LocalDate seldate=LocalDate.of(year,month,date);
+        boolean noedit=seldate.isAfter(curdate) && DAYS.between(curdate,seldate)>3;
+        if (noedit){
+            for (EditText t:texts){
+                t.setFocusable(!noedit);
+                t.setFocusableInTouchMode(!noedit);
+                t.setClickable(!noedit);
+                t.setLongClickable(!noedit);
+                t.setCursorVisible(!noedit);
+            }
+        }
     }
 }

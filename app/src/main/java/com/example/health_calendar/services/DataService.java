@@ -25,8 +25,7 @@ public class DataService {
                 "PRESSURE",
                "APPETITE",
                 "SLEEP",
-                "PHYSICALACTIVITY",
-                "FEELINGS"
+                "HEALTH"
     )
     );
 
