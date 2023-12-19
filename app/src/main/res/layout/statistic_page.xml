@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-
-    android:orientation="vertical"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
 
 
     <TextView
@@ -13,16 +12,257 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
 
-        android:fontFamily="sans-serif-medium"
         android:layout_gravity="top"
+        android:fontFamily="sans-serif-medium"
         android:gravity="center"
 
         android:text="@string/statistic_label"
         android:textAlignment="center"
         android:textColor="#28b140"
-        android:textSize="28sp"/>
+        android:textSize="28sp"
+        tools:ignore="MissingConstraints" />
 
 
+    <TextView
+        android:id="@+id/AverageHeight"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        android:layout_marginBottom="600dp"
+        android:text="Средний рост (см):"
+        android:textColor="@color/black"
+        android:textSize="17sp"
+        android:visibility="visible"
+
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHorizontal_bias="0.046"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        tools:ignore="MissingConstraints" />
+
+    <TextView
+        android:id="@+id/AverageValueHeight"
+        android:layout_width="179dp"
+        android:layout_height="22dp"
+        android:layout_marginBottom="600dp"
+        android:text="176"
+        android:textColor="@color/black"
+        android:textSize="17sp"
+        android:visibility="visible"
+
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHorizontal_bias="0.931"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        tools:ignore="MissingConstraints" />
+
+    <TextView
+        android:id="@+id/AverageWeight"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="555dp"
+        android:text="Средний вес (кг):"
+        android:textColor="@color/black"
+        android:textSize="17sp"
+        android:visibility="visible"
 
 
-</LinearLayout>
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHorizontal_bias="0.044"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        tools:ignore="MissingConstraints" />
+
+    <TextView
+        android:id="@+id/AverageValueWeight"
+        android:layout_width="179dp"
+        android:layout_height="22dp"
+        android:layout_marginBottom="555dp"
+        android:text="65"
+        android:textColor="@color/black"
+        android:textSize="17sp"
+        android:visibility="visible"
+
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHorizontal_bias="0.931"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        tools:ignore="MissingConstraints" />
+
+    <TextView
+        android:id="@+id/AverageCHSS"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Средний ЧСС (уд/\nмин)в покое:"
+        android:textColor="@color/black"
+        android:textSize="17sp"
+        android:visibility="visible"
+        android:layout_marginBottom="490dp"
+
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHorizontal_bias="0.046"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        tools:ignore="MissingConstraints"/>
+
+    <TextView
+        android:id="@+id/AverageValueCHSS"
+        android:layout_width="179dp"
+        android:layout_height="22dp"
+
+        android:text="71"
+        android:textColor="@color/black"
+        android:textSize="17sp"
+        android:visibility="visible"
+        android:layout_marginBottom="500dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHorizontal_bias="0.931"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        tools:ignore="MissingConstraints" />
+
+    <TextView
+        android:id="@+id/AveragePressure"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="425dp"
+        android:text="Среднее давление\n(А/Д):"
+        android:textColor="@color/black"
+        android:textSize="17sp"
+        android:visibility="visible"
+
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHorizontal_bias="0.046"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        tools:ignore="MissingConstraints" />
+
+    <TextView
+        android:id="@+id/AverageValuePressure"
+        android:layout_width="179dp"
+        android:layout_height="22dp"
+
+        android:text="120/80"
+        android:textColor="@color/black"
+        android:textSize="17sp"
+        android:visibility="visible"
+
+        android:layout_marginBottom="435dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHorizontal_bias="0.931"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        tools:ignore="MissingConstraints" />
+
+    <TextView
+        android:id="@+id/AverageAppetite"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Средний аппетит:"
+        android:textColor="@color/black"
+        android:textSize="17sp"
+        android:visibility="visible"
+        android:layout_marginBottom="380dp"
+
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHorizontal_bias="0.046"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        tools:ignore="MissingConstraints"/>
+
+    <TextView
+        android:id="@+id/AverageValueAppetite"
+        android:layout_width="179dp"
+        android:layout_height="22dp"
+
+        android:text="Хороший"
+        android:textColor="@color/black"
+        android:textSize="17sp"
+        android:visibility="visible"
+
+        android:layout_marginBottom="380dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHorizontal_bias="0.931"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        tools:ignore="MissingConstraints"  />
+
+    <TextView
+        android:id="@+id/AverageSleep"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Среднее количест-\nво сна:"
+        android:textColor="@color/black"
+        android:textSize="17sp"
+        android:visibility="visible"
+        android:layout_marginBottom="315dp"
+
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHorizontal_bias="0.046"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        tools:ignore="MissingConstraints"/>
+
+    <TextView
+        android:id="@+id/AverageValueSleep"
+        android:layout_width="179dp"
+        android:layout_height="22dp"
+
+        android:text="6"
+        android:textColor="@color/black"
+        android:textSize="17sp"
+        android:visibility="visible"
+
+        android:layout_marginBottom="325dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHorizontal_bias="0.931"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        tools:ignore="MissingConstraints"  />
+    <TextView
+        android:id="@+id/AverageHealth"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Среднее самочув-\nствие:"
+        android:textColor="@color/black"
+        android:textSize="17sp"
+        android:visibility="visible"
+        android:layout_marginBottom="250dp"
+
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHorizontal_bias="0.046"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        tools:ignore="MissingConstraints"/>
+
+    <TextView
+        android:id="@+id/AverageValueHealth"
+        android:layout_width="179dp"
+        android:layout_height="22dp"
+
+        android:text="Удоволетворительное"
+        android:textColor="@color/black"
+        android:textSize="17sp"
+        android:visibility="visible"
+
+        android:layout_marginBottom="260dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHorizontal_bias="0.931"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        tools:ignore="MissingConstraints" />
+
+    <com.github.mikephil.charting.charts.BarChart
+        android:id="@+id/barChart"
+        android:layout_width="411dp"
+        android:layout_height="220dp"
+        android:layout_weight="1"
+        android:layout_marginTop="0dp"
+        android:layout_marginBottom="5dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHorizontal_bias="0.931"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        tools:ignore="MissingConstraints"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
