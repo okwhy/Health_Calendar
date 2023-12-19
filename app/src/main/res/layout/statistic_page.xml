@@ -78,7 +78,7 @@
         android:layout_width="179dp"
         android:layout_height="22dp"
         android:layout_marginBottom="555dp"
-        android:text="ф"
+        android:text="65"
         android:textColor="@color/black"
         android:textSize="17sp"
         android:visibility="visible"
@@ -110,7 +110,7 @@
         android:layout_width="179dp"
         android:layout_height="22dp"
 
-        android:text="ф"
+        android:text="71"
         android:textColor="@color/black"
         android:textSize="17sp"
         android:visibility="visible"
@@ -142,7 +142,7 @@
         android:layout_width="179dp"
         android:layout_height="22dp"
 
-        android:text="ф"
+        android:text="120/80"
         android:textColor="@color/black"
         android:textSize="17sp"
         android:visibility="visible"
@@ -175,7 +175,7 @@
         android:layout_width="179dp"
         android:layout_height="22dp"
 
-        android:text="ф"
+        android:text="Хороший"
         android:textColor="@color/black"
         android:textSize="17sp"
         android:visibility="visible"
@@ -208,7 +208,7 @@
         android:layout_width="179dp"
         android:layout_height="22dp"
 
-        android:text="ф"
+        android:text="6"
         android:textColor="@color/black"
         android:textSize="17sp"
         android:visibility="visible"
@@ -240,7 +240,7 @@
         android:layout_width="179dp"
         android:layout_height="22dp"
 
-        android:text="ф"
+        android:text="Удоволетворительное"
         android:textColor="@color/black"
         android:textSize="17sp"
         android:visibility="visible"
@@ -255,10 +255,10 @@
     <com.github.mikephil.charting.charts.BarChart
         android:id="@+id/barChart"
         android:layout_width="411dp"
-        android:layout_height="232dp"
+        android:layout_height="220dp"
         android:layout_weight="1"
-
-        android:layout_marginBottom="15dp"
+        android:layout_marginTop="0dp"
+        android:layout_marginBottom="5dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintHorizontal_bias="0.931"
         app:layout_constraintLeft_toLeftOf="parent"

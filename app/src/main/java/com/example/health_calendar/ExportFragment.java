@@ -15,6 +15,7 @@ import androidx.fragment.app.Fragment;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Date;
 
 import jxl.Workbook;
@@ -53,17 +54,49 @@ public class ExportFragment extends Fragment {
         File file = getUniqueFile(downloadsDir, baseFileName, "xls");
 
         try {
+
+            ArrayList<String> days = new ArrayList<>();
+
+            days.add("10.09.2022");
+            days.add("11.09.2022");
+            days.add("12.09.2022");
+            days.add("13.09.2022");
+            days.add("14.09.2022");
+            days.add("15.09.2022");
+            days.add("16.09.2022");
+            days.add("17.09.2022");
+
+            ArrayList<String>  height = new ArrayList<String>();
+
+            height.add("176");
+            height.add("176");
+            height.add("176");
+            height.add("176");
+            height.add("176");
+            height.add("176");
+            height.add("176");
+            height.add("176");
+
+            ArrayList<String>  weight = new ArrayList<String>();
+
+            weight.add("64");
+            weight.add("65");
+            weight.add("65");
+            weight.add("65");
+            weight.add("64");
+            weight.add("64");
+            weight.add("65");
+            weight.add("65");
+
             // Создание рабочей книги и листа
             WritableWorkbook workbook = Workbook.createWorkbook(new FileOutputStream(file));
-            WritableSheet sheet = workbook.createSheet("Sheet1", 0);
+            WritableSheet sheet = workbook.createSheet("Дневник здоровья", 0);
 
             // Запись данных в ячейки
             for (int i = 1; i <= 7; i++) {
                 Label label = new Label(0, i , String.valueOf(i));
                 sheet.addCell(label);
             }
-            setColumnWidth(sheet, 0);
-
 
             Label label = new Label(1, 1, "Рост (см)");
             sheet.addCell(label);
@@ -86,7 +119,27 @@ public class ExportFragment extends Fragment {
             label = new Label(1, 7, "Самочувствие");
             sheet.addCell(label);
 
-            setColumnWidth(sheet, 1);
+            for (int i = 2; i < 10; i++) {
+                label = new Label(i, 0, days.get(i-2));
+                sheet.addCell(label);
+            }
+            for (int i = 2; i < 10; i++) {
+                label = new Label(i, 1, height.get(i-2));
+                sheet.addCell(label);
+            }
+
+            for (int i = 2; i < 10; i++) {
+                label = new Label(i, 2, weight.get(i-2));
+                sheet.addCell(label);
+            }
+
+
+
+
+
+            for (int i = 0; i < 10; i++) {
+                setColumnWidth(sheet, i);
+            }
 
 
 
