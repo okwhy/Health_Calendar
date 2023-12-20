@@ -55,7 +55,7 @@ public class ExportFragment extends Fragment {
 
         try {
 
-            ArrayList<String> days = new ArrayList<>();
+            ArrayList<String> days = new ArrayList<String>();
 
             days.add("10.09.2022");
             days.add("11.09.2022");
@@ -87,6 +87,61 @@ public class ExportFragment extends Fragment {
             weight.add("64");
             weight.add("65");
             weight.add("65");
+
+            ArrayList<String>  pulse = new ArrayList<String>();
+
+            pulse.add("77");
+            pulse.add("65");
+            pulse.add("67");
+            pulse.add("68");
+            pulse.add("74");
+            pulse.add("64");
+            pulse.add("65");
+            pulse.add("65");
+
+            ArrayList<String> pressure = new ArrayList<String>();
+
+            pressure.add("120/69");
+            pressure.add("123/81");
+            pressure.add("130/79");
+            pressure.add("120/67");
+            pressure.add("130/79");
+            pressure.add("123/81");
+            pressure.add("130/79");
+            pressure.add("123/75");
+
+            ArrayList<String> appetite = new ArrayList<String>();
+
+            appetite.add("Хороший");
+            appetite.add("Хороший");
+            appetite.add("Плохой");
+            appetite.add("Плохой");
+            appetite.add("Плохой");
+            appetite.add("Хороший");
+            appetite.add("Хороший");
+            appetite.add("Хороший");
+
+            ArrayList<String> sleep = new ArrayList<String>();
+
+            sleep.add("5");
+            sleep.add("4");
+            sleep.add("5");
+            sleep.add("5");
+            sleep.add("7");
+            sleep.add("6");
+            sleep.add("8");
+            sleep.add("8");
+
+            ArrayList<String> health = new ArrayList<String>();
+
+            health.add("Хорошее");
+            health.add("Хорошее");
+            health.add("Удоволетворительное");
+            health.add("Удоволетворительное");
+            health.add("Удоволетворительное");
+            health.add("Отличное");
+            health.add("Хороший");
+            health.add("Хороший");
 
             // Создание рабочей книги и листа
             WritableWorkbook workbook = Workbook.createWorkbook(new FileOutputStream(file));
@@ -133,9 +188,30 @@ public class ExportFragment extends Fragment {
                 sheet.addCell(label);
             }
 
+            for (int i = 2; i < 10; i++) {
+                label = new Label(i, 3, pulse.get(i-2));
+                sheet.addCell(label);
+            }
 
+            for (int i = 2; i < 10; i++) {
+                label = new Label(i, 4, pressure.get(i-2));
+                sheet.addCell(label);
+            }
 
+            for (int i = 2; i < 10; i++) {
+                label = new Label(i, 5, appetite.get(i-2));
+                sheet.addCell(label);
+            }
 
+            for (int i = 2; i < 10; i++) {
+                label = new Label(i, 6, sleep.get(i-2));
+                sheet.addCell(label);
+            }
+
+            for (int i = 2; i < 10; i++) {
+                label = new Label(i, 7, health.get(i-2));
+                sheet.addCell(label);
+            }
 
             for (int i = 0; i < 10; i++) {
                 setColumnWidth(sheet, i);
