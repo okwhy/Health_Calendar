@@ -12,8 +12,6 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
-@NoArgsConstructor
-@AllArgsConstructor
 @ToString
 @Entity
 public class Note implements Serializable {
@@ -21,6 +19,16 @@ public class Note implements Serializable {
         this.type = type;
         this.value = value;
         this.id_fkdate = id_fkdate;
+    }
+
+    public Note(long id, String type, String value, long id_fkdate) {
+        this.id = id;
+        this.type = type;
+        this.value = value;
+        this.id_fkdate = id_fkdate;
+    }
+
+    public Note() {
     }
 
     public long getId() {

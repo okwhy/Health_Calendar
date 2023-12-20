@@ -2,6 +2,7 @@ package com.example.health_calendar;
 
 import static java.time.temporal.ChronoUnit.DAYS;
 
+import android.database.Cursor;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -29,14 +30,15 @@ import com.example.health_calendar.entites.DateWithNotes;
 import com.example.health_calendar.entites.Note;
 import com.example.health_calendar.services.DataService;
 
-public class CalendarFragment extends Fragment{
+public class CalendarFragment extends Fragment {
 
-    public CalendarFragment(){
+    public CalendarFragment() {
         // require a empty public constructor
     }
-    private LocalDate curdate =null;
+
+    private LocalDate curdate = null;
     private Calendar calendar;
-    private int currentYear =0 ;
+    private int currentYear = 0;
     private int currentMonth = 0;
     private int currentDay = 0;
 
@@ -51,14 +53,14 @@ public class CalendarFragment extends Fragment{
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.calendar_page, container, false);
-        calendar=Calendar.getInstance();
+        calendar = Calendar.getInstance();
         curdate = LocalDateTime.now().toLocalDate();
-        Log.d("sdfaf",curdate.getYear()+"");
-        currentDay=  curdate.getDayOfMonth();
-        currentMonth=  curdate.getMonthValue();
-        currentYear=  curdate.getYear();
+        Log.d("sdfaf", curdate.getYear() + "");
+        currentDay = curdate.getDayOfMonth();
+        currentMonth = curdate.getMonthValue();
+        currentYear = curdate.getYear();
         CalendarView calendarView = view.findViewById(R.id.calendarView_1);
-        dataService=DataService.initial(this.getContext());
+        dataService = DataService.initial(this.getContext());
         final List<String> calendarStrings = new ArrayList<>();
         final int[] days = new int[31];
         final int[] months = new int[12];
@@ -85,8 +87,8 @@ public class CalendarFragment extends Fragment{
         final TextView textHealth = view.findViewById(R.id.textHealth);
         final EditText textInputHealth = view.findViewById(R.id.textInputHealth);
 
-        texts= new ArrayList<>(Arrays.asList(textInputHeight,textInputWeight,textInputPulse,textInputPressure
-                ,textInputAppetite,textInputSlepping,textInputHealth));
+        texts = new ArrayList<>(Arrays.asList(textInputHeight, textInputWeight, textInputPulse, textInputPressure
+                , textInputAppetite, textInputSlepping, textInputHealth));
 
         final View dayInfo = view.findViewById(R.id.dayInfo);
         final View dayHeight = view.findViewById(R.id.dayHeight);
@@ -98,17 +100,22 @@ public class CalendarFragment extends Fragment{
 
         final View dayHealth = view.findViewById(R.id.dayHealth);
 
-        Map<String,String> notes=fetchDate(currentYear,currentMonth,currentDay);
-        checkdate(currentYear,currentMonth,currentDay);
-        if (!(notes==null||notes.isEmpty())){
-            textInputHeight.setText(notes.get("HEIGHT")==null ?"Нет данных":notes.get("HEIGHT"));
-            textInputWeight.setText(notes.get("WEIGHT")==null ?"Нет данных":notes.get("WEIGHT"));
-            textInputPulse.setText(notes.get("PULSE")==null ?"Нет данных":notes.get("PULSE"));
-            textInputPressure.setText(notes.get("APPETITE")==null ?"Нет данных":notes.get("APPETITE"));
-            textInputAppetite.setText(notes.get("APPETITE")==null ?"Нет данных":notes.get("PULSE"));
-            textInputSlepping.setText(notes.get("SLEEP")==null ?"Нет данных":notes.get("SLEEP"));
-            textInputHealth.setText(notes.get("HEALTH")==null ?"Нет данных":notes.get("HEALTH"));
-        }else{
+        Map<String, String> notes = null;
+        try {
+            notes = fetchDate(currentYear, currentMonth, currentDay);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+        checkdate(currentYear, currentMonth, currentDay);
+        if (!(notes == null || notes.isEmpty())) {
+            textInputHeight.setText(notes.get("HEIGHT") == null ? "Нет данных" : notes.get("HEIGHT"));
+            textInputWeight.setText(notes.get("WEIGHT") == null ? "Нет данных" : notes.get("WEIGHT"));
+            textInputPulse.setText(notes.get("PULSE") == null ? "Нет данных" : notes.get("PULSE"));
+            textInputPressure.setText(notes.get("APPETITE") == null ? "Нет данных" : notes.get("APPETITE"));
+            textInputAppetite.setText(notes.get("APPETITE") == null ? "Нет данных" : notes.get("PULSE"));
+            textInputSlepping.setText(notes.get("SLEEP") == null ? "Нет данных" : notes.get("SLEEP"));
+            textInputHealth.setText(notes.get("HEALTH") == null ? "Нет данных" : notes.get("HEALTH"));
+        } else {
             textInputHeight.setText("Нет данных");
             textInputWeight.setText("Нет данных");
             textInputPulse.setText("Нет данных");
@@ -120,11 +127,10 @@ public class CalendarFragment extends Fragment{
         calendarView.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
             @Override
             public void onSelectedDayChange(@NonNull CalendarView view, int year, int month, int dayOfMonth) {
-                currentYear =  year;
-                currentMonth =  (month+1);
-                currentDay =  dayOfMonth;
-                if (dayInfo.getVisibility() == View.INVISIBLE)
-                {
+                currentYear = year;
+                currentMonth = (month + 1);
+                currentDay = dayOfMonth;
+                if (dayInfo.getVisibility() == View.INVISIBLE) {
                     dayInfo.setVisibility(View.VISIBLE);
                     dayHeight.setVisibility(View.VISIBLE);
                     dayWeight.setVisibility(View.VISIBLE);
@@ -156,17 +162,24 @@ public class CalendarFragment extends Fragment{
                         }
                     }
                 }
-                Map<String,String> notes=fetchDate(currentYear,currentMonth,currentDay);
-                checkdate(currentYear,currentMonth,currentDay);
-                if (!(notes==null||notes.isEmpty())){
-                    textInputHeight.setText(notes.get("HEIGHT")==null ?"Нет данных":notes.get("HEIGHT"));
-                    textInputWeight.setText(notes.get("WEIGHT")==null ?"Нет данных":notes.get("WEIGHT"));
-                    textInputPulse.setText(notes.get("PULSE")==null ?"Нет данных":notes.get("PULSE"));
-                    textInputPressure.setText(notes.get("APPETITE")==null ?"Нет данных":notes.get("APPETITE"));
-                    textInputAppetite.setText(notes.get("APPETITE")==null ?"Нет данных":notes.get("PULSE"));
-                    textInputSlepping.setText(notes.get("SLEEP")==null ?"Нет данных":notes.get("SLEEP"));
-                    textInputHealth.setText(notes.get("HEALTH")==null ?"Нет данных":notes.get("HEALTH"));
-                }else{
+                Map<String, String> notes = null;
+                try {
+                    notes = fetchDate(currentYear, currentMonth, currentDay);
+                } catch (InterruptedException e) {
+                    throw new RuntimeException(e);
+                }
+                Log.d("a", notes == null ? "hiu" : notes.toString() + " " + currentYear + " " +
+                        currentMonth + " " + currentDay);
+                checkdate(currentYear, currentMonth, currentDay);
+                if (!(notes == null || notes.isEmpty())) {
+                    textInputHeight.setText(notes.get("HEIGHT") == null ? "Нет данных" : notes.get("HEIGHT"));
+                    textInputWeight.setText(notes.get("WEIGHT") == null ? "Нет данных" : notes.get("WEIGHT"));
+                    textInputPulse.setText(notes.get("PULSE") == null ? "Нет данных" : notes.get("PULSE"));
+                    textInputPressure.setText(notes.get("PRESSURE") == null ? "Нет данных" : notes.get("PRESSURE"));
+                    textInputAppetite.setText(notes.get("APPETITE") == null ? "Нет данных" : notes.get("APPETITE"));
+                    textInputSlepping.setText(notes.get("SLEEP") == null ? "Нет данных" : notes.get("SLEEP"));
+                    textInputHealth.setText(notes.get("HEALTH") == null ? "Нет данных" : notes.get("HEALTH"));
+                } else {
                     textInputHeight.setText("Нет данных");
                     textInputWeight.setText("Нет данных");
                     textInputPulse.setText("Нет данных");
@@ -182,101 +195,95 @@ public class CalendarFragment extends Fragment{
 
         final Button saveTextButton = view.findViewById(R.id.saveTextButton_1);
         saveTextButton.setOnClickListener(v -> {
-            Log.d("afa","afgbrfdefgrtfdsdfg");
-            Map<String,String> notes1 =new HashMap<>();
-            if (!textInputHeight.getText().toString().equals("Нет данных")){
-               notes1.put("HEIGHT",textInputHeight.getText().toString());
+            Map<String, String> notes1 = new HashMap<>();
+            if (!textInputHeight.getText().toString().equals("Нет данных")) {
+                notes1.put("HEIGHT", textInputHeight.getText().toString());
             }
-            if (!textInputWeight.getText().toString().equals("Нет данных")){
-                notes1.put("WEIGHT",textInputWeight.getText().toString());
+            if (!textInputWeight.getText().toString().equals("Нет данных")) {
+                notes1.put("WEIGHT", textInputWeight.getText().toString());
             }
-            if (!textInputWeight.getText().toString().equals("Нет данных")){
-                notes1.put("WEIGHT",textInputWeight.getText().toString());
+            if (!textInputWeight.getText().toString().equals("Нет данных")) {
+                notes1.put("WEIGHT", textInputWeight.getText().toString());
             }
-            if (!textInputPressure.getText().toString().equals("Нет данных")){
-                notes1.put("PULSE",textInputPressure.getText().toString());
+            if (!textInputPressure.getText().toString().equals("Нет данных")) {
+                notes1.put("PULSE", textInputPressure.getText().toString());
             }
-            if (!textInputSlepping.getText().toString().equals("Нет данных")){
-                notes1.put("SLEEP",textInputSlepping.getText().toString());
+            if (!textInputSlepping.getText().toString().equals("Нет данных")) {
+                notes1.put("SLEEP", textInputSlepping.getText().toString());
             }
-            if (!textInputHealth.getText().toString().equals("Нет данных")){
-                notes1.put("HEALTH",textInputHealth.getText().toString());
+            if (!textInputHealth.getText().toString().equals("Нет данных")) {
+                notes1.put("HEALTH", textInputHealth.getText().toString());
             }
-            Log.d("dafa",notes1.toString());
-            insertorupdateDate(notes1,currentYear,currentMonth,currentDay);
+            Log.d("dafa", notes1.toString() + " " + currentYear);
+            insertorupdateDate(notes1, currentYear, currentMonth, currentDay);
         });
 
         return view;
 
     }
-    private void insertorupdateDate(Map<String,String> notes, int year, int month, int date){
-        final DateSQL[] ref = new DateSQL[1];
-        Runnable runnable = () -> {
-            ref[0] =dataService.getDateNoNotes( year, (byte) month, (byte) date);
-        };
-        Thread thread =new Thread(runnable);
-        thread.start();
-        final long[] id = new long[1];
-        if(ref[0]==null) {
-            runnable = () -> {
-                id[0] =dataService.insertDate( year, (byte) month, (byte) date);
-            };
-            Thread thread2 =new Thread(runnable);
-            thread2.start();
-        };
-        List<Note>noteslist=new ArrayList<>();
-        for (String n:
-             notes.keySet()) {
-            noteslist.add(new Note(n,notes.get(n),id[0]));
-        }
-        for (Note n:
-             noteslist) {
-            runnable = () -> {
-                Long a=dataService.insertOrUpdateNote(n);
-                Log.d("afa",a+"  efafarfa");
-            };
-            Thread thread2 =new Thread(runnable);
-            thread2.start();
-        }
-        runnable = () -> {
-            Log.d("plsfaffa"," "+dataService.getAllNoteTest());
-            Log.d("plsfaffa"," "+dataService.getAllDateTest());
-        };
-        Thread thread2 =new Thread(runnable);
-        thread2.start();
 
+    private void insertorupdateDate(Map<String, String> notes, int year, int month, int date) {
+        final DateSQL[] ref = new DateSQL[1];
+        final long[] id = new long[1];
+        List<Note> noteslist = new ArrayList<>();
+        Runnable runnable = () -> {
+            Log.d("hou", String.valueOf(year));
+            ref[0] = dataService.getDateNoNotes(year, month, date);
+            if (ref[0] == null) {
+                id[0] = dataService.insertDate(year, month, date);
+                Log.d("hou", dataService.getDateById(id[0]).toString() + "    " + year);
+            } else id[0] = ref[0].getId();
+            for (String n :
+                    notes.keySet()) {
+                noteslist.add(new Note(n, notes.get(n), id[0]));
+            }
+            for (Note n :
+                    noteslist) {
+                Long a = dataService.insertOrUpdateNote(n);
+                Log.d("afa", a + "  efafarfa");
+            }
+            Log.d("plsfaffa", " " + dataService.getAllNoteTest());
+            Log.d("plsfaffa", " " + dataService.getAllDateTest());
+
+        };
+        Thread thread = new Thread(runnable);
+        thread.start();
     }
-    private Map<String,String> fetchDate(int year, int month, int date){
+
+    private Map<String, String> fetchDate(int year, int month, int date) throws InterruptedException {
         final DateWithNotes[] dateSQL = new DateWithNotes[1];
         Runnable runnable = () -> {
-             dateSQL[0] = dataService.getDate(year, (byte) month, (byte) date);
+            dateSQL[0] = dataService.getDate(year, month, date);
+            Log.d("jopa", dateSQL[0] == null ? " " : dateSQL[0].toString());
         };
-        Thread thread =new Thread(runnable);
+        Thread thread = new Thread(runnable);
         thread.start();
-        if(dateSQL[0]==null){
+        thread.join();
+        if (dateSQL[0] == null) {
             return null;
         }
-        List<Note> notes= dateSQL[0].notes;
-        Map<String,String> notesRes=new HashMap<>();
-        for(Note n:notes){
-            notesRes.put(n.getType(),n.getValue());
+        List<Note> notes = dateSQL[0].notes;
+        Map<String, String> notesRes = new HashMap<>();
+        for (Note n : notes) {
+            notesRes.put(n.getType(), n.getValue());
         }
-        Thread.currentThread().interrupt();
         return notesRes;
-    }
-    private void checkdate(int year, int month, int date){
 
-        LocalDate seldate=LocalDate.of(year,month,date);
-        Log.d("afafa",seldate+" "+curdate);
-        boolean noedit=seldate.isAfter(curdate) || DAYS.between(curdate,seldate)<-3;
-        Log.d("afafa"," "+noedit);
-            for (EditText t:texts){
-                t.setFocusable(!noedit);
-                t.setFocusableInTouchMode(!noedit);
-                t.setClickable(!noedit);
-                t.setLongClickable(!noedit);
-                t.setCursorVisible(!noedit);
-            }
+    }
+
+    private void checkdate(int year, int month, int date) {
+
+        LocalDate seldate = LocalDate.of(year, month, date);
+        Log.d("afafa", seldate + " " + curdate);
+        boolean noedit = seldate.isAfter(curdate) || DAYS.between(curdate, seldate) < -3;
+        Log.d("afafa", " " + noedit);
+        for (EditText t : texts) {
+            t.setFocusable(!noedit);
+            t.setFocusableInTouchMode(!noedit);
+            t.setClickable(!noedit);
+            t.setLongClickable(!noedit);
+            t.setCursorVisible(!noedit);
+        }
 
     }
 }

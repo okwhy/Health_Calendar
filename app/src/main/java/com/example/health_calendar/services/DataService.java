@@ -18,6 +18,8 @@ public class DataService {
     private final DateDao dateDao;
     private final NoteDao noteDao;
     private static DataService dataService;
+
+
     private Set<String> NoteCategories = new HashSet<>(Arrays.asList(
                 "HEIGHT",
                 "WEIGHT",
@@ -42,11 +44,11 @@ public class DataService {
     public List<DateSQL> GetAllData(){
         return dateDao.getAll();
     }
-    public List<DateSQL> GetByYear(byte year){
+    public List<DateSQL> GetByYear(int year){
 
         return dateDao.getByYear(year);
     }
-    public List<DateSQL> GetByMonth(byte year, byte month){
+    public List<DateSQL> GetByMonth(int year, byte month){
 
         return dateDao.getByMonth(year,month);
     }
@@ -69,13 +71,13 @@ public class DataService {
 
         return null;
     }
-    public DateWithNotes getDate(int year, byte mouth, byte day){
+    public DateWithNotes getDate(int year, int mouth, int day){
         return dateDao.getDate(year, mouth, day);
     }
-    public DateSQL getDateNoNotes(int year, byte mouth, byte day){
+    public DateSQL getDateNoNotes(int year, int mouth, int day){
         return dateDao.getDateNoNotes(year, mouth, day);
     }
-    public long insertDate(int year, byte mouth, byte day){
+    public long insertDate(int year, int mouth, int day){
         return dateDao.insert(new DateSQL(year,mouth,day));
     }
     public long insertOrUpdateNote(Note note){
@@ -96,4 +98,5 @@ public class DataService {
     public List<DateSQL>getAllDateTest(){
         return dateDao.getAll();
     }
+    public DateSQL getDateById(long id){ return dateDao.getDateById(id);}
 }
