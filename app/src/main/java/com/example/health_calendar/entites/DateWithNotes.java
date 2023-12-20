@@ -5,6 +5,9 @@ import androidx.room.Relation;
 
 import java.util.List;
 
+import lombok.ToString;
+
+@ToString
 public class DateWithNotes {
     @Embedded public DateSQL dateSQL;
     @Relation(
