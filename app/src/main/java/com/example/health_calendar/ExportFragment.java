@@ -2,8 +2,10 @@ package com.example.health_calendar;
 
 import android.graphics.Color;
 import android.icu.text.SimpleDateFormat;
+import android.icu.util.LocaleData;
 import android.os.Bundle;
 import android.os.Environment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,11 +14,19 @@ import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 
+import com.example.health_calendar.entites.DateSQL;
+import com.example.health_calendar.entites.DateWithNotes;
+import com.example.health_calendar.entites.Note;
+import com.example.health_calendar.services.DataService;
+
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import jxl.Workbook;
 import jxl.write.Label;
@@ -47,15 +57,53 @@ public class ExportFragment extends Fragment {
         return view;
     }
 
-    private void createExcelFile() {
+    private void createExcelFile(){
         // Создание нового файла Excel
         File downloadsDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS);
         String baseFileName = "Health_Diary";
         File file = getUniqueFile(downloadsDir, baseFileName, "xls");
 
-        try {
+        final int byear = 2023;
+        final int bmonth = 12;
+        final int bday = 18;
 
-            ArrayList<String> days = new ArrayList<String>();
+        final int ayear = 2023;
+        final int amonth = 12;
+        final int aday = 20;
+
+        final DataService dataService = DataService.initial(this.getContext());
+
+        final DateSQL[] ref = new DateSQL[1];
+        final long[] id = new long[1];
+
+
+        try {
+            final List<DateWithNotes>[] dateWithNotes = new List[]{new ArrayList<>()};
+            Runnable runnable = () -> {
+                dateWithNotes[0] = dataService.getBetween(byear,ayear,bmonth,amonth,bday,aday);
+
+            };
+
+            Thread thread = new Thread(runnable);
+            thread.start();
+            thread.join();
+
+            List<DateSQL> date = new ArrayList<>();
+
+            ArrayList<String> days = new ArrayList<>();
+
+            for (DateWithNotes d:dateWithNotes[0]) {
+                date.add(d.dateSQL);
+            }
+
+            List<String> dateFormat = new ArrayList<>();
+
+            DateTimeFormatter pattern = DateTimeFormatter.ofPattern("dd.MM.yyyy");
+
+            for (DateSQL d:date) {
+                dateFormat.add(LocalDate.of(d.getYear(),d.getMonth(),d.getDay()).format(pattern));
+            }
+
 
             days.add("10.09.2022");
             days.add("11.09.2022");
@@ -174,8 +222,9 @@ public class ExportFragment extends Fragment {
             label = new Label(1, 7, "Самочувствие");
             sheet.addCell(label);
 
-            for (int i = 2; i < 10; i++) {
-                label = new Label(i, 0, days.get(i-2));
+            for (int i = 2; i < dateFormat.size()+2; i++) {
+                label = new Label(i, 0, dateFormat.get(i-2));
+                Log.d("вававав",dateFormat.get(i-2));
                 sheet.addCell(label);
             }
             for (int i = 2; i < 10; i++) {

@@ -80,6 +80,10 @@ public class DataService {
     public long insertDate(int year, int mouth, int day){
         return dateDao.insert(new DateSQL(year,mouth,day));
     }
+    public List<DateWithNotes> getBetween(int byear, int ayear, int bmonth, int amonth, int bdate, int adate){
+        return dateDao.getBetween(byear,ayear,bmonth,amonth,bdate,adate);
+    }
+
     public long insertOrUpdateNote(Note note){
         Note note1=noteDao.getByCatAndFKId(note.getType(),note.getId_fkdate());
         if (note1!= null){

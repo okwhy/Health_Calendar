@@ -28,7 +28,7 @@ public interface DateDao {
     @Query("SELECT * FROM DateSQL WHERE DateSQL.year BETWEEN :byear AND :ayear AND " +
             "DateSQL.month BETWEEN :bmonth and :amonth AND DateSQL.day BETWEEN" +
             ":bdate and :adate")
-    List<DateSQL>getBetween(int byear, int ayear, int bmonth, int amonth, int bdate, int adate);
+    List<DateWithNotes>getBetween(int byear, int ayear, int bmonth, int amonth, int bdate, int adate);
 
     @Query("select * from DateSQL where DateSQL.year =:year and DateSQL.month =:month and DateSQL.day =:day")
     DateWithNotes getDate(int year, int month, int day);

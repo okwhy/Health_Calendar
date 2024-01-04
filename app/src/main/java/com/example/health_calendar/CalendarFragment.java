@@ -164,7 +164,7 @@ public class CalendarFragment extends Fragment {
                 }
                 Map<String, String> notes = null;
                 try {
-                    notes = fetchDate(currentYear, currentMonth, currentDay);
+                    notes = fetchDate(currentYear, currentMonth, currentDay); // все записи за текущий день
                 } catch (InterruptedException e) {
                     throw new RuntimeException(e);
                 }
@@ -227,11 +227,9 @@ public class CalendarFragment extends Fragment {
         final long[] id = new long[1];
         List<Note> noteslist = new ArrayList<>();
         Runnable runnable = () -> {
-            Log.d("hou", String.valueOf(year));
             ref[0] = dataService.getDateNoNotes(year, month, date);
             if (ref[0] == null) {
                 id[0] = dataService.insertDate(year, month, date);
-                Log.d("hou", dataService.getDateById(id[0]).toString() + "    " + year);
             } else id[0] = ref[0].getId();
             for (String n :
                     notes.keySet()) {
@@ -240,10 +238,8 @@ public class CalendarFragment extends Fragment {
             for (Note n :
                     noteslist) {
                 Long a = dataService.insertOrUpdateNote(n);
-                Log.d("afa", a + "  efafarfa");
+
             }
-            Log.d("plsfaffa", " " + dataService.getAllNoteTest());
-            Log.d("plsfaffa", " " + dataService.getAllDateTest());
 
         };
         Thread thread = new Thread(runnable);
@@ -254,7 +250,6 @@ public class CalendarFragment extends Fragment {
         final DateWithNotes[] dateSQL = new DateWithNotes[1];
         Runnable runnable = () -> {
             dateSQL[0] = dataService.getDate(year, month, date);
-            Log.d("jopa", dateSQL[0] == null ? " " : dateSQL[0].toString());
         };
         Thread thread = new Thread(runnable);
         thread.start();
