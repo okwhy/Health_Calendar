@@ -9,11 +9,12 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
+
 public class MainActivity extends AppCompatActivity
         implements BottomNavigationView.OnNavigationItemSelectedListener {
 
     BottomNavigationView bottomNavigationView;
-
+    public Frag calendarFragment1 = new Frag();
     public final int Calendar_page = R.id.homepage;
     public final int Statistic_page = R.id.statisticpage;
     public final int Export_page = R.id.export;
@@ -40,11 +41,11 @@ public class MainActivity extends AppCompatActivity
     @Override
     public boolean
     onNavigationItemSelected(@NonNull MenuItem item) {
-        System.out.print("PUK");
         if (item.getItemId() == Calendar_page) {
+
             getSupportFragmentManager()
                     .beginTransaction()
-                    .replace(R.id.flFragment, calendarFragment)
+                    .replace(R.id.flFragment, calendarFragment1)
                     .commit();
             return true;
         } else if (item.getItemId() == Statistic_page) {
@@ -62,9 +63,4 @@ public class MainActivity extends AppCompatActivity
         } else
             return false;
     }
-
-
-
-
-
 }

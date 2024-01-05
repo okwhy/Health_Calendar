@@ -51,4 +51,6 @@ dependencies {
     implementation("androidx.room:room-paging:$room_version")
     implementation ("com.github.PhilJay:MPAndroidChart:v3.1.0")
     implementation ("net.sourceforge.jexcelapi:jxl:2.6.12")
+    implementation 'com.applandeo:material-calendar-view:1.7.0'
+
 }
