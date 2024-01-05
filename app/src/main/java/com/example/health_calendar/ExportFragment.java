@@ -1,5 +1,6 @@
 package com.example.health_calendar;
 
+import android.app.DatePickerDialog;
 import android.graphics.Color;
 import android.icu.text.SimpleDateFormat;
 import android.icu.util.LocaleData;
@@ -10,6 +11,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.DatePicker;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
@@ -25,6 +28,7 @@ import java.io.IOException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -35,9 +39,14 @@ import jxl.write.WritableWorkbook;
 
 public class ExportFragment extends Fragment {
 
-    public ExportFragment(){
+    public ExportFragment() {
         // require a empty public constructor
     }
+
+    EditText dateOt;
+    EditText dateDo;
+    DatePickerDialog datePickerDialogOt;
+    DatePickerDialog datePickerDialogDo;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -46,6 +55,47 @@ public class ExportFragment extends Fragment {
 
         Button buttonCreateExcel = view.findViewById(R.id.buttonCreateExcel);
         buttonCreateExcel.setBackgroundColor(Color.GREEN);
+
+        dateOt = (EditText) view.findViewById(R.id.dateOt);
+        dateDo = (EditText) view.findViewById(R.id.dateDo);
+
+        dateOt.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                final Calendar c = Calendar.getInstance();
+                int mDay = c.get(Calendar.DAY_OF_MONTH);
+                int mMonth = c.get(Calendar.MONTH);
+                int mYear = c.get(Calendar.YEAR);
+                datePickerDialogOt = new DatePickerDialog(getContext(), new DatePickerDialog.OnDateSetListener() {
+                    @Override
+                    public void onDateSet(DatePicker view, int year,
+                                          int monthOfYear, int dayOfMonth) {
+                        dateOt.setText(dayOfMonth + "-" + (monthOfYear + 1) + "-" + year);
+
+                    }
+                }, mYear, mMonth, mDay);
+                datePickerDialogOt.show();
+            }
+        });
+
+        dateDo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                final Calendar c = Calendar.getInstance();
+                int mDay = c.get(Calendar.DAY_OF_MONTH);
+                int mMonth = c.get(Calendar.MONTH);
+                int mYear = c.get(Calendar.YEAR);
+                datePickerDialogDo = new DatePickerDialog(getContext(), new DatePickerDialog.OnDateSetListener() {
+                    @Override
+                    public void onDateSet(DatePicker view, int year,
+                                          int monthOfYear, int dayOfMonth) {
+                        dateDo.setText(dayOfMonth + "-" + (monthOfYear + 1) + "-" + year);
+
+                    }
+                }, mYear, mMonth, mDay);
+                datePickerDialogDo.show();
+            }
+        });
 
         buttonCreateExcel.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -57,7 +107,7 @@ public class ExportFragment extends Fragment {
         return view;
     }
 
-    private void createExcelFile(){
+    private void createExcelFile() {
         // Создание нового файла Excel
         File downloadsDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS);
         String baseFileName = "Health_Diary";
@@ -80,7 +130,7 @@ public class ExportFragment extends Fragment {
         try {
             final List<DateWithNotes>[] dateWithNotes = new List[]{new ArrayList<>()};
             Runnable runnable = () -> {
-                dateWithNotes[0] = dataService.getBetween(byear,ayear,bmonth,amonth,bday,aday);
+                dateWithNotes[0] = dataService.getBetween(byear, ayear, bmonth, amonth, bday, aday);
 
             };
 
@@ -92,7 +142,7 @@ public class ExportFragment extends Fragment {
 
             ArrayList<String> days = new ArrayList<>();
 
-            for (DateWithNotes d:dateWithNotes[0]) {
+            for (DateWithNotes d : dateWithNotes[0]) {
                 date.add(d.dateSQL);
             }
 
@@ -100,8 +150,8 @@ public class ExportFragment extends Fragment {
 
             DateTimeFormatter pattern = DateTimeFormatter.ofPattern("dd.MM.yyyy");
 
-            for (DateSQL d:date) {
-                dateFormat.add(LocalDate.of(d.getYear(),d.getMonth(),d.getDay()).format(pattern));
+            for (DateSQL d : date) {
+                dateFormat.add(LocalDate.of(d.getYear(), d.getMonth(), d.getDay()).format(pattern));
             }
 
 
@@ -114,7 +164,7 @@ public class ExportFragment extends Fragment {
             days.add("16.09.2022");
             days.add("17.09.2022");
 
-            ArrayList<String>  height = new ArrayList<String>();
+            ArrayList<String> height = new ArrayList<String>();
 
             height.add("176");
             height.add("176");
@@ -125,7 +175,7 @@ public class ExportFragment extends Fragment {
             height.add("176");
             height.add("176");
 
-            ArrayList<String>  weight = new ArrayList<String>();
+            ArrayList<String> weight = new ArrayList<String>();
 
             weight.add("64");
             weight.add("65");
@@ -136,7 +186,7 @@ public class ExportFragment extends Fragment {
             weight.add("65");
             weight.add("65");
 
-            ArrayList<String>  pulse = new ArrayList<String>();
+            ArrayList<String> pulse = new ArrayList<String>();
 
             pulse.add("77");
             pulse.add("65");
@@ -197,7 +247,7 @@ public class ExportFragment extends Fragment {
 
             // Запись данных в ячейки
             for (int i = 1; i <= 7; i++) {
-                Label label = new Label(0, i , String.valueOf(i));
+                Label label = new Label(0, i, String.valueOf(i));
                 sheet.addCell(label);
             }
 
@@ -222,50 +272,49 @@ public class ExportFragment extends Fragment {
             label = new Label(1, 7, "Самочувствие");
             sheet.addCell(label);
 
-            for (int i = 2; i < dateFormat.size()+2; i++) {
-                label = new Label(i, 0, dateFormat.get(i-2));
-                Log.d("вававав",dateFormat.get(i-2));
+            for (int i = 2; i < dateFormat.size() + 2; i++) {
+                label = new Label(i, 0, dateFormat.get(i - 2));
+                Log.d("вававав", dateFormat.get(i - 2));
                 sheet.addCell(label);
             }
             for (int i = 2; i < 10; i++) {
-                label = new Label(i, 1, height.get(i-2));
-                sheet.addCell(label);
-            }
-
-            for (int i = 2; i < 10; i++) {
-                label = new Label(i, 2, weight.get(i-2));
+                label = new Label(i, 1, height.get(i - 2));
                 sheet.addCell(label);
             }
 
             for (int i = 2; i < 10; i++) {
-                label = new Label(i, 3, pulse.get(i-2));
+                label = new Label(i, 2, weight.get(i - 2));
                 sheet.addCell(label);
             }
 
             for (int i = 2; i < 10; i++) {
-                label = new Label(i, 4, pressure.get(i-2));
+                label = new Label(i, 3, pulse.get(i - 2));
                 sheet.addCell(label);
             }
 
             for (int i = 2; i < 10; i++) {
-                label = new Label(i, 5, appetite.get(i-2));
+                label = new Label(i, 4, pressure.get(i - 2));
                 sheet.addCell(label);
             }
 
             for (int i = 2; i < 10; i++) {
-                label = new Label(i, 6, sleep.get(i-2));
+                label = new Label(i, 5, appetite.get(i - 2));
                 sheet.addCell(label);
             }
 
             for (int i = 2; i < 10; i++) {
-                label = new Label(i, 7, health.get(i-2));
+                label = new Label(i, 6, sleep.get(i - 2));
+                sheet.addCell(label);
+            }
+
+            for (int i = 2; i < 10; i++) {
+                label = new Label(i, 7, health.get(i - 2));
                 sheet.addCell(label);
             }
 
             for (int i = 0; i < 10; i++) {
                 setColumnWidth(sheet, i);
             }
-
 
 
             // Сохранение рабочей книги
@@ -310,4 +359,5 @@ public class ExportFragment extends Fragment {
         // Устанавливаем ширину столбца на основе максимальной длины данных
         sheet.setColumnView(columnIndex, maxContentLength + 2); // Увеличиваем ширину на 2 символа для дополнительного пространства
     }
+
 }
