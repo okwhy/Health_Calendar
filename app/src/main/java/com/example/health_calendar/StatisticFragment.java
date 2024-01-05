@@ -1,5 +1,6 @@
 package com.example.health_calendar;
 
+import android.app.DatePickerDialog;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -11,6 +12,8 @@ import androidx.fragment.app.Fragment;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
+import android.widget.DatePicker;
+import android.widget.EditText;
 import android.widget.ViewFlipper;
 
 import com.github.mikephil.charting.charts.BarChart;
@@ -27,6 +30,7 @@ import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 public class StatisticFragment extends Fragment {
@@ -67,6 +71,11 @@ public class StatisticFragment extends Fragment {
 
     private ViewFlipper simpleViewFlipper;
     Button btnNext;
+
+    EditText dateOt;
+    EditText dateDo;
+    DatePickerDialog datePickerDialogOt;
+    DatePickerDialog datePickerDialogDo;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -167,6 +176,49 @@ public class StatisticFragment extends Fragment {
         BarData barDataSleep = new BarData(dataSetSleep);
         barChartSleep.setData(barDataSleep);
 
+
+        dateOt = (EditText) rootView.findViewById(R.id.dateOt);
+        dateDo = (EditText) rootView.findViewById(R.id.dateDo);
+
+        dateOt.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                final Calendar c = Calendar.getInstance();
+                int mDay = c.get(Calendar.DAY_OF_MONTH);
+                int mMonth = c.get(Calendar.MONTH);
+                int mYear = c.get(Calendar.YEAR);
+                datePickerDialogOt = new DatePickerDialog(getContext(), new DatePickerDialog.OnDateSetListener() {
+                    @Override
+                    public void onDateSet(DatePicker view, int year,
+                                          int monthOfYear, int dayOfMonth) {
+                        dateOt.setText(dayOfMonth + "-" + (monthOfYear + 1) + "-" + year);
+
+                    }
+                }, mYear, mMonth, mDay);
+                datePickerDialogOt.show();
+            }
+        });
+
+        dateDo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                final Calendar c = Calendar.getInstance();
+                int mDay = c.get(Calendar.DAY_OF_MONTH);
+                int mMonth = c.get(Calendar.MONTH);
+                int mYear = c.get(Calendar.YEAR);
+                datePickerDialogDo = new DatePickerDialog(getContext(), new DatePickerDialog.OnDateSetListener() {
+                    @Override
+                    public void onDateSet(DatePicker view, int year,
+                                          int monthOfYear, int dayOfMonth) {
+                        dateDo.setText(dayOfMonth + "-" + (monthOfYear + 1) + "-" + year);
+
+                    }
+                }, mYear, mMonth, mDay);
+                datePickerDialogDo.show();
+            }
+        });
+
         return rootView;
     }
+
 }
