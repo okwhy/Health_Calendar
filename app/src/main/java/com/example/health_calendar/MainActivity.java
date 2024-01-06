@@ -14,7 +14,7 @@ public class MainActivity extends AppCompatActivity
         implements BottomNavigationView.OnNavigationItemSelectedListener {
 
     BottomNavigationView bottomNavigationView;
-    public Frag calendarFragment1 = new Frag();
+    //public Frag calendarFragment1 = new Frag(); сука ты блядская
     public final int Calendar_page = R.id.homepage;
     public final int Statistic_page = R.id.statisticpage;
     public final int Export_page = R.id.export;
@@ -42,10 +42,9 @@ public class MainActivity extends AppCompatActivity
     public boolean
     onNavigationItemSelected(@NonNull MenuItem item) {
         if (item.getItemId() == Calendar_page) {
-
             getSupportFragmentManager()
                     .beginTransaction()
-                    .replace(R.id.flFragment, calendarFragment1)
+                    .replace(R.id.flFragment, calendarFragment)
                     .commit();
             return true;
         } else if (item.getItemId() == Statistic_page) {
