@@ -1,5 +1,6 @@
 package com.example.health_calendar;
 
+import static com.google.android.gms.common.util.CollectionUtils.listOf;
 import static java.time.temporal.ChronoUnit.DAYS;
 
 import android.database.Cursor;
@@ -25,6 +26,9 @@ import java.util.Map;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
+import com.applandeo.materialcalendarview.EventDay;
+import com.applandeo.materialcalendarview.listeners.OnCalendarPageChangeListener;
+import com.applandeo.materialcalendarview.listeners.OnDayClickListener;
 import com.example.health_calendar.entites.DateSQL;
 import com.example.health_calendar.entites.DateWithNotes;
 import com.example.health_calendar.entites.Note;
@@ -55,36 +59,30 @@ public class CalendarFragment extends Fragment {
         View view = inflater.inflate(R.layout.calendar_page, container, false);
         calendar = Calendar.getInstance();
         curdate = LocalDateTime.now().toLocalDate();
-        Log.d("sdfaf", curdate.getYear() + "");
+
         currentDay = curdate.getDayOfMonth();
         currentMonth = curdate.getMonthValue();
         currentYear = curdate.getYear();
-        CalendarView calendarView = view.findViewById(R.id.calendarView_1);
+
+        com.applandeo.materialcalendarview.CalendarView calendarView = view.findViewById(R.id.calendarView);
         dataService = DataService.initial(this.getContext());
         final List<String> calendarStrings = new ArrayList<>();
         final int[] days = new int[31];
         final int[] months = new int[12];
         final int[] years = new int[10];
 
-        final TextView textHeight = view.findViewById(R.id.textHeight);
         final EditText textInputHeight = view.findViewById(R.id.textInputHeight);
 
-        final TextView textWeight = view.findViewById(R.id.textWeight);
         final EditText textInputWeight = view.findViewById(R.id.textInputWeight);
 
-        final TextView textPulse = view.findViewById(R.id.textPulse);
         final EditText textInputPulse = view.findViewById(R.id.textInputPulse);
 
-        final TextView textPressure = view.findViewById(R.id.textPressure);
         final EditText textInputPressure = view.findViewById(R.id.textInputPressure);
 
-        final TextView textAppetite = view.findViewById(R.id.textAppetite);
         final EditText textInputAppetite = view.findViewById(R.id.textInputAppetite);
 
-        final TextView textSlepping = view.findViewById(R.id.textSlepping);
         final EditText textInputSlepping = view.findViewById(R.id.textInputSlepping);
 
-        final TextView textHealth = view.findViewById(R.id.textHealth);
         final EditText textInputHealth = view.findViewById(R.id.textInputHealth);
 
         texts = new ArrayList<>(Arrays.asList(textInputHeight, textInputWeight, textInputPulse, textInputPressure
@@ -124,9 +122,18 @@ public class CalendarFragment extends Fragment {
             textInputSlepping.setText("Нет данных");
             textInputHealth.setText("Нет данных");
         }
-        calendarView.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
+        calendarView.setOnDayClickListener(new OnDayClickListener(){
             @Override
-            public void onSelectedDayChange(@NonNull CalendarView view, int year, int month, int dayOfMonth) {
+            public void onDayClick(EventDay eventDay) {
+
+                Calendar cal = eventDay.getCalendar();
+
+                int year = cal.get(1);
+
+                int month = cal.get(2);
+
+                    int dayOfMonth = cal.get(5);
+
                 currentYear = year;
                 currentMonth = (month + 1);
                 currentDay = dayOfMonth;
@@ -141,7 +148,7 @@ public class CalendarFragment extends Fragment {
                     dayHealth.setVisibility(View.VISIBLE);
                 }
 
-                for (int i = 0; i < 30; i++) {
+                for (int i = 0; i < 31; i++) {
                     if (days[i] == currentDay) {
                         for (int j = 0; j < 12; j++) {
                             if (months[j] == currentMonth) {
@@ -168,8 +175,7 @@ public class CalendarFragment extends Fragment {
                 } catch (InterruptedException e) {
                     throw new RuntimeException(e);
                 }
-                Log.d("a", notes == null ? "hiu" : notes.toString() + " " + currentYear + " " +
-                        currentMonth + " " + currentDay);
+
                 checkdate(currentYear, currentMonth, currentDay);
                 if (!(notes == null || notes.isEmpty())) {
                     textInputHeight.setText(notes.get("HEIGHT") == null ? "Нет данных" : notes.get("HEIGHT"));
@@ -191,6 +197,7 @@ public class CalendarFragment extends Fragment {
 
             }
         });
+        
 
 
         final Button saveTextButton = view.findViewById(R.id.saveTextButton_1);
