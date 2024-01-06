@@ -23,6 +23,47 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.063" />
 
+
+    <EditText
+        android:id="@+id/dateOt"
+        android:layout_width="155dp"
+        android:layout_height="54dp"
+        android:layout_centerHorizontal="true"
+        android:background="#d4d4d4"
+        android:hint="От"
+        android:padding="15dp"
+        android:textColor="#897"
+        android:textColorHint="#090"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.062"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.24"
+        tools:ignore="MissingConstraints" />
+
+    <EditText
+        android:id="@+id/dateDo"
+        android:layout_width="155dp"
+        android:layout_height="54dp"
+        android:layout_centerHorizontal="true"
+        android:background="#d4d4d4"
+        android:hint="До"
+        android:padding="15dp"
+        android:textColor="#897"
+        android:textColorHint="#090"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.937"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.24"
+        tools:ignore="MissingConstraints" />
+
     <Button
         android:id="@+id/buttonCreateExcel"
         android:layout_width="160dp"
@@ -31,8 +72,9 @@
         android:textColor="@color/black"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.303" />
+        app:layout_constraintVertical_bias="0.633" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
