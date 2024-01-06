@@ -217,7 +217,6 @@ public class CalendarFragment extends Fragment {
             Log.d("dafa", notes1.toString() + " " + currentYear);
             insertorupdateDate(notes1, currentYear, currentMonth, currentDay);
         });
-
         return view;
 
     }

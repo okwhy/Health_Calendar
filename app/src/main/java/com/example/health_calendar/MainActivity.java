@@ -14,7 +14,7 @@ public class MainActivity extends AppCompatActivity
         implements BottomNavigationView.OnNavigationItemSelectedListener {
 
     BottomNavigationView bottomNavigationView;
-    //public Frag calendarFragment1 = new Frag(); сука ты блядская
+    public Frag calendarFragment1 = new Frag();
     public final int Calendar_page = R.id.homepage;
     public final int Statistic_page = R.id.statisticpage;
     public final int Export_page = R.id.export;
