@@ -248,12 +248,26 @@ public class ExportFragment extends Fragment {
                 label = new Label(7, 0, "Самочувствие");
                 sheet.addCell(label);
                 int rown=1;
+            LocalDate refDate=LocalDate.of(ayear,amonth,aday);
+            LocalDate endDate=LocalDate.of(byear,bmonth,bday);
             for(DateWithNotes dwn: dateWithNotes[0]){
+                while (!refDate.isEqual(dwn.dateSQL.getAsLocalDate())){
+                    DateTimeFormatter dateTimeFormatter=DateTimeFormatter.ofPattern("d-M-yyyy");
+                    label = new Label(0,rown,refDate.format(dateTimeFormatter));
+                    sheet.addCell(label);
+                    for(int i=1;i<sheet.getColumns();i++){
+                        label = new Label(i,rown,"-");
+                        sheet.addCell(label);
+                    }
+                    refDate=refDate.minusDays(1);
+                    Log.d("sdas",dwn.dateSQL.getDateString() +" afaga "+refDate);
+                    rown++;
+                }
+//                Log.d("fd",tday+" "+tmonth+" "+tyear);
                 label = new Label(0,rown,dwn.dateSQL.getDateString());
                 sheet.addCell(label);
                 List<Note> notes=new ArrayList<>();
                 notes.addAll(dwn.notes);
-                Log.d("KD",notes+"");
                 Map<String,String> cellval=new HashMap();
                 Set<String> catgs=new HashSet<>();
                 catgs.addAll(dataService.getNoteCategories());
@@ -279,8 +293,20 @@ public class ExportFragment extends Fragment {
                 label = new Label(7, rown,cellval.get("HEALTH"));
                 sheet.addCell(label);
                 rown++;
+                refDate=refDate.minusDays(1);
             }
-            for(int i=0;i<=sheet.getRows();i++){
+            while (!refDate.isEqual(endDate)){
+                DateTimeFormatter dateTimeFormatter=DateTimeFormatter.ofPattern("d-M-yyyy");
+                label = new Label(0,rown,refDate.format(dateTimeFormatter));
+                sheet.addCell(label);
+                for(int i=1;i<sheet.getColumns();i++){
+                    label = new Label(i,rown,"-");
+                    sheet.addCell(label);
+                }
+                rown++;
+                refDate=refDate.minusDays(1);
+            }
+            for(int i=0;i<sheet.getColumns();i++){
                 setColumnWidth(sheet,i);
             }
             workbook.write();

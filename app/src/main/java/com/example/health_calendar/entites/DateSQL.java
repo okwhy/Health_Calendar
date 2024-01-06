@@ -8,6 +8,7 @@ import androidx.room.PrimaryKey;
 
 
 import java.io.Serializable;
+import java.time.LocalDate;
 
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
@@ -40,7 +41,8 @@ public class DateSQL implements Serializable {
     public String getDateString(){
         return day+"-"+month+"-"+year;
     }
-
+    @Ignore
+    public LocalDate getAsLocalDate(){return LocalDate.of(year,month,day);}
     public long getId() {
         return id;
     }
