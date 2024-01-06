@@ -20,6 +20,10 @@ public class DataService {
     private static DataService dataService;
 
 
+    public Set<String> getNoteCategories() {
+        return NoteCategories;
+    }
+
     private Set<String> NoteCategories = new HashSet<>(Arrays.asList(
                 "HEIGHT",
                 "WEIGHT",

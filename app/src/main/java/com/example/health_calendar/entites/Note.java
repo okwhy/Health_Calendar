@@ -28,6 +28,16 @@ public class Note implements Serializable {
         this.id_fkdate = id_fkdate;
     }
 
+    @Override
+    public String toString() {
+        return "Note{" +
+                "id=" + id +
+                ", type='" + type + '\'' +
+                ", value='" + value + '\'' +
+                ", id_fkdate=" + id_fkdate +
+                '}';
+    }
+
     public Note() {
     }
 

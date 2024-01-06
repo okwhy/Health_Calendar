@@ -29,8 +29,13 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 import jxl.Workbook;
 import jxl.write.Label;
@@ -42,6 +47,12 @@ public class ExportFragment extends Fragment {
     public ExportFragment() {
         // require a empty public constructor
     }
+    private int byear;
+    private int ayear;
+    private int bmonth;
+    private int amonth;
+    private int bday;
+    private int aday;
 
     EditText dateOt;
     EditText dateDo;
@@ -71,7 +82,9 @@ public class ExportFragment extends Fragment {
                     public void onDateSet(DatePicker view, int year,
                                           int monthOfYear, int dayOfMonth) {
                         dateOt.setText(dayOfMonth + "-" + (monthOfYear + 1) + "-" + year);
-
+                        byear=year;
+                        bmonth=monthOfYear+1;
+                        bday=dayOfMonth;
                     }
                 }, mYear, mMonth, mDay);
                 datePickerDialogOt.show();
@@ -90,7 +103,9 @@ public class ExportFragment extends Fragment {
                     public void onDateSet(DatePicker view, int year,
                                           int monthOfYear, int dayOfMonth) {
                         dateDo.setText(dayOfMonth + "-" + (monthOfYear + 1) + "-" + year);
-
+                        ayear=year;
+                        amonth=monthOfYear+1;
+                        aday=dayOfMonth;
                     }
                 }, mYear, mMonth, mDay);
                 datePickerDialogDo.show();
@@ -113,14 +128,7 @@ public class ExportFragment extends Fragment {
         String baseFileName = "Health_Diary";
         File file = getUniqueFile(downloadsDir, baseFileName, "xls");
 
-        final int byear = 2023;
-        final int bmonth = 12;
-        final int bday = 18;
-
-        final int ayear = 2023;
-        final int amonth = 12;
-        final int aday = 20;
-
+        Log.d("Kd",byear+" "+ayear+" "+bmonth+" "+amonth+" "+bday+" "+aday);
         final DataService dataService = DataService.initial(this.getContext());
 
         final DateSQL[] ref = new DateSQL[1];
@@ -137,116 +145,18 @@ public class ExportFragment extends Fragment {
             Thread thread = new Thread(runnable);
             thread.start();
             thread.join();
-
-            List<DateSQL> date = new ArrayList<>();
-
-            ArrayList<String> days = new ArrayList<>();
-
-            for (DateWithNotes d : dateWithNotes[0]) {
-                date.add(d.dateSQL);
+            if(dateWithNotes[0]==null || dateWithNotes[0].size()==0){
+                Toast.makeText(getActivity(), "Записи за данный день отсутствуют", Toast.LENGTH_SHORT).show();
+                return;
             }
 
-            List<String> dateFormat = new ArrayList<>();
-
-            DateTimeFormatter pattern = DateTimeFormatter.ofPattern("dd.MM.yyyy");
-
-            for (DateSQL d : date) {
-                dateFormat.add(LocalDate.of(d.getYear(), d.getMonth(), d.getDay()).format(pattern));
-            }
-
-
-            days.add("10.09.2022");
-            days.add("11.09.2022");
-            days.add("12.09.2022");
-            days.add("13.09.2022");
-            days.add("14.09.2022");
-            days.add("15.09.2022");
-            days.add("16.09.2022");
-            days.add("17.09.2022");
-
-            ArrayList<String> height = new ArrayList<String>();
-
-            height.add("176");
-            height.add("176");
-            height.add("176");
-            height.add("176");
-            height.add("176");
-            height.add("176");
-            height.add("176");
-            height.add("176");
-
-            ArrayList<String> weight = new ArrayList<String>();
-
-            weight.add("64");
-            weight.add("65");
-            weight.add("65");
-            weight.add("65");
-            weight.add("64");
-            weight.add("64");
-            weight.add("65");
-            weight.add("65");
-
-            ArrayList<String> pulse = new ArrayList<String>();
-
-            pulse.add("77");
-            pulse.add("65");
-            pulse.add("67");
-            pulse.add("68");
-            pulse.add("74");
-            pulse.add("64");
-            pulse.add("65");
-            pulse.add("65");
-
-            ArrayList<String> pressure = new ArrayList<String>();
-
-            pressure.add("120/69");
-            pressure.add("123/81");
-            pressure.add("130/79");
-            pressure.add("120/67");
-            pressure.add("130/79");
-            pressure.add("123/81");
-            pressure.add("130/79");
-            pressure.add("123/75");
-
-            ArrayList<String> appetite = new ArrayList<String>();
-
-            appetite.add("Хороший");
-            appetite.add("Хороший");
-            appetite.add("Плохой");
-            appetite.add("Плохой");
-            appetite.add("Плохой");
-            appetite.add("Хороший");
-            appetite.add("Хороший");
-            appetite.add("Хороший");
-
-            ArrayList<String> sleep = new ArrayList<String>();
-
-            sleep.add("5");
-            sleep.add("4");
-            sleep.add("5");
-            sleep.add("5");
-            sleep.add("7");
-            sleep.add("6");
-            sleep.add("8");
-            sleep.add("8");
-
-            ArrayList<String> health = new ArrayList<String>();
-
-            health.add("Хорошее");
-            health.add("Хорошее");
-            health.add("Удоволетворительное");
-            health.add("Удоволетворительное");
-            health.add("Удоволетворительное");
-            health.add("Отличное");
-            health.add("Хороший");
-            health.add("Хороший");
 
             // Создание рабочей книги и листа
             WritableWorkbook workbook = Workbook.createWorkbook(new FileOutputStream(file));
             WritableSheet sheet = workbook.createSheet("Дневник здоровья", 0);
 
             // Запись данных в ячейки
-            for (int i = 1; i <= 7; i++) {
+            /* for (int i = 1; i <= 7; i++) {
                 Label label = new Label(0, i, String.valueOf(i));
                 sheet.addCell(label);
             }
@@ -314,10 +224,65 @@ public class ExportFragment extends Fragment {
 
             for (int i = 0; i < 10; i++) {
                 setColumnWidth(sheet, i);
+            }  */
+                Label label = new Label(0, 0, "Дата");
+                sheet.addCell(label);
+                label = new Label(1, 0, "Рост (см)");
+                sheet.addCell(label);
+
+                label = new Label(2, 0, "Вес (кг)");
+                sheet.addCell(label);
+
+                label = new Label(3, 0, "ЧСС (уд/мин) в покое");
+                sheet.addCell(label);
+
+                label = new Label(4, 0, "Давление (А/Д)");
+                sheet.addCell(label);
+
+                label = new Label(5, 0, "Аппетит");
+                sheet.addCell(label);
+
+                label = new Label(6, 0, "Сон");
+                sheet.addCell(label);
+
+                label = new Label(7, 0, "Самочувствие");
+                sheet.addCell(label);
+                int rown=1;
+            for(DateWithNotes dwn: dateWithNotes[0]){
+                label = new Label(0,rown,dwn.dateSQL.getDateString());
+                sheet.addCell(label);
+                List<Note> notes=new ArrayList<>();
+                notes.addAll(dwn.notes);
+                Log.d("KD",notes+"");
+                Map<String,String> cellval=new HashMap();
+                Set<String> catgs=new HashSet<>();
+                catgs.addAll(dataService.getNoteCategories());
+                for(String s:catgs){
+                    String value="-";
+                    Note refNote=notes.stream().filter(x->x.getType().equals(s)).findFirst().orElse(null);
+                    if (refNote!=null&&refNote.getValue()!="Нет данных")
+                        value=refNote.getValue();
+                    cellval.put(s,value);
+                }
+                    label = new Label(1, rown,cellval.get("HEIGHT"));
+                    sheet.addCell(label);
+                label = new Label(2, rown,cellval.get("WEIGHT"));
+                sheet.addCell(label);
+                label = new Label(3, rown,cellval.get("PULSE"));
+                sheet.addCell(label);
+                label = new Label(4, rown,cellval.get("PRESSURE"));
+                sheet.addCell(label);
+                label = new Label(5, rown,cellval.get("APPETITE"));
+                sheet.addCell(label);
+                label = new Label(6, rown,cellval.get("SLEEP"));
+                sheet.addCell(label);
+                label = new Label(7, rown,cellval.get("HEALTH"));
+                sheet.addCell(label);
+                rown++;
             }
-
-
-            // Сохранение рабочей книги
+            for(int i=0;i<=sheet.getRows();i++){
+                setColumnWidth(sheet,i);
+            }
             workbook.write();
             workbook.close();
 
