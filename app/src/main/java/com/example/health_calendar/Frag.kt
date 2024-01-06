@@ -1,4 +1,4 @@
-package com.example.health_calendar;
+package com.example.health_calendar
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -13,7 +13,6 @@ class Frag : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Надуваем макет фрагмента.
         return inflater.inflate(R.layout.calendar_page, container, false)
     }
 
