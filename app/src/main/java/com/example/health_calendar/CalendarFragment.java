@@ -29,6 +29,7 @@ import androidx.fragment.app.Fragment;
 
 import com.applandeo.materialcalendarview.CalendarView;
 import com.applandeo.materialcalendarview.EventDay;
+import com.applandeo.materialcalendarview.exceptions.OutOfDateRangeException;
 import com.applandeo.materialcalendarview.listeners.OnCalendarPageChangeListener;
 import com.applandeo.materialcalendarview.listeners.OnDayClickListener;
 
@@ -69,9 +70,7 @@ public class CalendarFragment extends Fragment {
 
         com.applandeo.materialcalendarview.CalendarView calendarView = view.findViewById(R.id.calendarView);
 
-
-
-        calendarView.setHeaderColor(Color.GREEN);
+        calendarView.setSwipeEnabled(false);
 
         dataService = DataService.initial(this.getContext());
         final List<String> calendarStrings = new ArrayList<>();
@@ -162,7 +161,7 @@ public class CalendarFragment extends Fragment {
                             if (months[j] == currentMonth) {
                                 for (int k = 0; k < 10; k++) {
                                     if (years[k] == currentYear) {
-                                        calendarView.setBackgroundColor(10);
+
                                         textInputHeight.setText(calendarStrings.get(i));
                                         textInputWeight.setText(calendarStrings.get(i + 1));
                                         textInputPulse.setText(calendarStrings.get(i + 2));
@@ -224,7 +223,7 @@ public class CalendarFragment extends Fragment {
 
                 LocalDate seldate;
 
-                List<Calendar> calendars = new ArrayList<>();
+                List<EventDay> events = new ArrayList<>();
 
                 for(int iter = 0; iter < days_amount; iter++){
 
@@ -235,18 +234,23 @@ public class CalendarFragment extends Fragment {
                     noedit = seldate.isAfter(curdate) || DAYS.between(curdate, seldate) < -3;
 
                     if(noedit){
-                        calendar_temp = GregorianCalendar.from(seldate.atStartOfDay(java.time.ZoneId.systemDefault()));
-                        calendars.add(calendar_temp);
+                        calendar_temp.set(year,month-1,day+iter);
+                        /*try {
+                            calendarView.setDate(calendar_temp);
+                            //Log.d("f","ff");
+                        } catch (OutOfDateRangeException e) {
+                            throw new RuntimeException(e);
+                        }*/
+
+                        events.add(new EventDay(calendar_temp, R.drawable.ic_line));
+                        Log.d("ВПЕРЕД!",calendar_temp+"");
                     }
                 }
 
-                for (Calendar calendar: calendars
-                     ) {
-                    Log.d("ВПЕРЕД!",calendar+"");
-                }
+
+                calendarView.setEvents(events);
 
 
-                calendarView.setSelectedDates(calendars);
 
             }
         });
@@ -269,7 +273,7 @@ public class CalendarFragment extends Fragment {
 
                 LocalDate seldate;
 
-                List<Calendar> calendars = new ArrayList<>();
+                List<EventDay> events = new ArrayList<>();
 
                 for(int iter = 0; iter < days_amount; iter++){
 
@@ -280,19 +284,20 @@ public class CalendarFragment extends Fragment {
                     noedit = seldate.isAfter(curdate) || DAYS.between(curdate, seldate) < -3;
 
                     if(noedit){
-                        calendar_temp = GregorianCalendar.from(seldate.atStartOfDay(java.time.ZoneId.systemDefault()));
-                        calendars.add(calendar_temp);
+                        calendar_temp.set(year,month-1,day+iter);
+                        /*try {
+                            calendarView.setDate(calendar_temp);
+                            //Log.d("f","ff");
+                        } catch (OutOfDateRangeException e) {
+                            throw new RuntimeException(e);
+                        }*/
+
+                        events.add(new EventDay(calendar_temp, R.drawable.ic_line));
+                        Log.d("ВЗАД!",calendar_temp+"");
                     }
                 }
 
-                for (Calendar calendar: calendars
-                ) {
-                    Log.d("ВЗАД!",calendar+"");
-                }
-
-
-                calendarView.setSelectedDates(calendars);
-
+                calendarView.setEvents(events);
             }
         });
         
