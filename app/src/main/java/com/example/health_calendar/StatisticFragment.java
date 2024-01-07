@@ -165,7 +165,7 @@ public class StatisticFragment extends Fragment {
                     ref=0;
                 }
                 try {
-                    if(getbool(ref)){
+                    if(getbool(ref+1)){
                         update(ref,true);
                     }
                 } catch (InterruptedException e) {
@@ -386,13 +386,13 @@ public class StatisticFragment extends Fragment {
                 realnumber++;
             }
         }
+        Log.d("dada",realnumber+" "+next);
         if(realnumber==3){
             showinfoPressure(avgPressureText,lineChartPressure,"PRESSURE");
         }else if(realnumber==4) {
             showinfoCommon(avgappetitText, cats.get(realnumber));
         }else if(realnumber==6){
             showinfoCommon(avgfeelingsText,cats.get(realnumber));
-
         }else if(realnumber==0){
             showinfoFloats(avgHeightText,barChartHeight, cats.get(realnumber),"Рост");
         }else if(realnumber==1){
