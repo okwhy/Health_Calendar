@@ -4,13 +4,13 @@ import static com.google.android.gms.common.util.CollectionUtils.listOf;
 import static java.time.temporal.ChronoUnit.DAYS;
 
 import android.database.Cursor;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.CalendarView;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -19,6 +19,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
+import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -26,9 +27,12 @@ import java.util.Map;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
+import com.applandeo.materialcalendarview.CalendarView;
 import com.applandeo.materialcalendarview.EventDay;
 import com.applandeo.materialcalendarview.listeners.OnCalendarPageChangeListener;
 import com.applandeo.materialcalendarview.listeners.OnDayClickListener;
+
+
 import com.example.health_calendar.entites.DateSQL;
 import com.example.health_calendar.entites.DateWithNotes;
 import com.example.health_calendar.entites.Note;
@@ -46,16 +50,15 @@ public class CalendarFragment extends Fragment {
     private int currentMonth = 0;
     private int currentDay = 0;
 
-    private int daysIndex = 0;
-    private int monthsIndex = 0;
-    private int yearIndex = 0;
-
     private DataService dataService;
     private List<EditText> texts;
+
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+
         View view = inflater.inflate(R.layout.calendar_page, container, false);
         calendar = Calendar.getInstance();
         curdate = LocalDateTime.now().toLocalDate();
@@ -65,6 +68,11 @@ public class CalendarFragment extends Fragment {
         currentYear = curdate.getYear();
 
         com.applandeo.materialcalendarview.CalendarView calendarView = view.findViewById(R.id.calendarView);
+
+
+
+        calendarView.setHeaderColor(Color.GREEN);
+
         dataService = DataService.initial(this.getContext());
         final List<String> calendarStrings = new ArrayList<>();
         final int[] days = new int[31];
@@ -132,7 +140,7 @@ public class CalendarFragment extends Fragment {
 
                 int month = cal.get(2);
 
-                    int dayOfMonth = cal.get(5);
+                int dayOfMonth = cal.get(5);
 
                 currentYear = year;
                 currentMonth = (month + 1);
@@ -194,6 +202,96 @@ public class CalendarFragment extends Fragment {
                     textInputSlepping.setText("Нет данных");
                     textInputHealth.setText("Нет данных");
                 }
+
+            }
+        });
+
+        calendarView.setOnForwardPageChangeListener(new OnCalendarPageChangeListener() {
+            @Override
+            public void onChange() {
+
+                Calendar cal = calendarView.getCurrentPageDate();
+
+                int year = cal.get(1);
+
+                int month = cal.get(2)+1;
+
+                int days_amount = cal.getActualMaximum(Calendar.DAY_OF_MONTH);
+
+                int day = cal.get(5);
+
+                boolean noedit;
+
+                LocalDate seldate;
+
+                List<Calendar> calendars = new ArrayList<>();
+
+                for(int iter = 0; iter < days_amount; iter++){
+
+                    Calendar calendar_temp = Calendar.getInstance();
+
+                    seldate = LocalDate.of(year, month, (day+iter));
+
+                    noedit = seldate.isAfter(curdate) || DAYS.between(curdate, seldate) < -3;
+
+                    if(noedit){
+                        calendar_temp = GregorianCalendar.from(seldate.atStartOfDay(java.time.ZoneId.systemDefault()));
+                        calendars.add(calendar_temp);
+                    }
+                }
+
+                for (Calendar calendar: calendars
+                     ) {
+                    Log.d("ВПЕРЕД!",calendar+"");
+                }
+
+
+                calendarView.setSelectedDates(calendars);
+
+            }
+        });
+
+        calendarView.setOnPreviousPageChangeListener(new OnCalendarPageChangeListener() {
+            @Override
+            public void onChange() {
+
+                Calendar cal = calendarView.getCurrentPageDate();
+
+                int year = cal.get(1);
+
+                int month = cal.get(2)+1;
+
+                int days_amount = cal.getActualMaximum(Calendar.DAY_OF_MONTH);
+
+                int day = cal.get(5);
+
+                boolean noedit;
+
+                LocalDate seldate;
+
+                List<Calendar> calendars = new ArrayList<>();
+
+                for(int iter = 0; iter < days_amount; iter++){
+
+                    Calendar calendar_temp = Calendar.getInstance();
+
+                    seldate = LocalDate.of(year, month, (day+iter));
+
+                    noedit = seldate.isAfter(curdate) || DAYS.between(curdate, seldate) < -3;
+
+                    if(noedit){
+                        calendar_temp = GregorianCalendar.from(seldate.atStartOfDay(java.time.ZoneId.systemDefault()));
+                        calendars.add(calendar_temp);
+                    }
+                }
+
+                for (Calendar calendar: calendars
+                ) {
+                    Log.d("ВЗАД!",calendar+"");
+                }
+
+
+                calendarView.setSelectedDates(calendars);
 
             }
         });
@@ -275,9 +373,9 @@ public class CalendarFragment extends Fragment {
     private void checkdate(int year, int month, int date) {
 
         LocalDate seldate = LocalDate.of(year, month, date);
-        Log.d("afafa", seldate + " " + curdate);
+
         boolean noedit = seldate.isAfter(curdate) || DAYS.between(curdate, seldate) < -3;
-        Log.d("afafa", " " + noedit);
+
         for (EditText t : texts) {
             t.setFocusable(!noedit);
             t.setFocusableInTouchMode(!noedit);
