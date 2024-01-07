@@ -62,6 +62,7 @@ public class CalendarFragment extends Fragment {
 
         View view = inflater.inflate(R.layout.calendar_page, container, false);
         calendar = Calendar.getInstance();
+
         curdate = LocalDateTime.now().toLocalDate();
 
         currentDay = curdate.getDayOfMonth();
@@ -70,9 +71,16 @@ public class CalendarFragment extends Fragment {
 
         com.applandeo.materialcalendarview.CalendarView calendarView = view.findViewById(R.id.calendarView);
 
+        //Настройка календаря:
+
         calendarView.setSwipeEnabled(false);
 
+        addmarks(calendarView);
+
+        //------------------------------------------------------
+
         dataService = DataService.initial(this.getContext());
+
         final List<String> calendarStrings = new ArrayList<>();
         final int[] days = new int[31];
         final int[] months = new int[12];
@@ -209,48 +217,7 @@ public class CalendarFragment extends Fragment {
             @Override
             public void onChange() {
 
-                Calendar cal = calendarView.getCurrentPageDate();
-
-                int year = cal.get(1);
-
-                int month = cal.get(2)+1;
-
-                int days_amount = cal.getActualMaximum(Calendar.DAY_OF_MONTH);
-
-                int day = cal.get(5);
-
-                boolean noedit;
-
-                LocalDate seldate;
-
-                List<EventDay> events = new ArrayList<>();
-
-                for(int iter = 0; iter < days_amount; iter++){
-
-                    Calendar calendar_temp = Calendar.getInstance();
-
-                    seldate = LocalDate.of(year, month, (day+iter));
-
-                    noedit = seldate.isAfter(curdate) || DAYS.between(curdate, seldate) < -3;
-
-                    if(noedit){
-                        calendar_temp.set(year,month-1,day+iter);
-                        /*try {
-                            calendarView.setDate(calendar_temp);
-                            //Log.d("f","ff");
-                        } catch (OutOfDateRangeException e) {
-                            throw new RuntimeException(e);
-                        }*/
-
-                        events.add(new EventDay(calendar_temp, R.drawable.ic_line));
-                        Log.d("ВПЕРЕД!",calendar_temp+"");
-                    }
-                }
-
-
-                calendarView.setEvents(events);
-
-
+                addmarks(calendarView);
 
             }
         });
@@ -259,45 +226,8 @@ public class CalendarFragment extends Fragment {
             @Override
             public void onChange() {
 
-                Calendar cal = calendarView.getCurrentPageDate();
+               addmarks(calendarView);
 
-                int year = cal.get(1);
-
-                int month = cal.get(2)+1;
-
-                int days_amount = cal.getActualMaximum(Calendar.DAY_OF_MONTH);
-
-                int day = cal.get(5);
-
-                boolean noedit;
-
-                LocalDate seldate;
-
-                List<EventDay> events = new ArrayList<>();
-
-                for(int iter = 0; iter < days_amount; iter++){
-
-                    Calendar calendar_temp = Calendar.getInstance();
-
-                    seldate = LocalDate.of(year, month, (day+iter));
-
-                    noedit = seldate.isAfter(curdate) || DAYS.between(curdate, seldate) < -3;
-
-                    if(noedit){
-                        calendar_temp.set(year,month-1,day+iter);
-                        /*try {
-                            calendarView.setDate(calendar_temp);
-                            //Log.d("f","ff");
-                        } catch (OutOfDateRangeException e) {
-                            throw new RuntimeException(e);
-                        }*/
-
-                        events.add(new EventDay(calendar_temp, R.drawable.ic_line));
-                        Log.d("ВЗАД!",calendar_temp+"");
-                    }
-                }
-
-                calendarView.setEvents(events);
             }
         });
         
@@ -373,6 +303,42 @@ public class CalendarFragment extends Fragment {
         }
         return notesRes;
 
+    }
+
+    public void addmarks(CalendarView calendarView)
+    {
+        Calendar cal = calendarView.getCurrentPageDate();
+
+        int year = cal.get(1);
+
+        int month = cal.get(2)+1;
+
+        int days_amount = cal.getActualMaximum(Calendar.DAY_OF_MONTH);
+
+        int day = cal.get(5);
+
+        boolean noedit;
+
+        LocalDate seldate;
+
+        List<EventDay> events = new ArrayList<>();
+
+        for(int iter = 0; iter < days_amount; iter++){
+
+            Calendar calendar_temp = Calendar.getInstance();
+
+            seldate = LocalDate.of(year, month, (day+iter));
+
+            noedit = seldate.isAfter(curdate) || DAYS.between(curdate, seldate) < -3;
+
+            if(noedit){
+                calendar_temp.set(year,month-1,day+iter);
+
+                events.add(new EventDay(calendar_temp, R.drawable.ic_line));
+            }
+        }
+
+        calendarView.setEvents(events);
     }
 
     private void checkdate(int year, int month, int date) {

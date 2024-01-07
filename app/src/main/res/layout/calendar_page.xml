@@ -13,8 +13,7 @@
         android:layout_gravity="top"
         android:layout_weight="3"
         android:visibility="visible"
-        app:type="many_days_picker"
-        app:selectionLabelColor="@color/black"
+        app:type="classic"
         app:firstDayOfWeek="monday"
         app:eventsEnabled="true"
         />
@@ -221,7 +220,7 @@
             <Button
                 android:id="@+id/saveTextButton_1"
                 android:layout_width="match_parent"
-                android:layout_height="40dp"
+                android:layout_height="wrap_content"
                 android:text="@string/save"
                 android:visibility="visible"
                 />
