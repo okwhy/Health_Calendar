@@ -139,7 +139,7 @@ public class ExportFragment extends Fragment {
             final List<DateWithNotes>[] dateWithNotes = new List[]{new ArrayList<>()};
             Runnable runnable = () -> {
                 dateWithNotes[0] = dataService.getBetween(byear, ayear, bmonth, amonth, bday, aday);
-
+//                Log.d("cok",""+dataService.getMediumByDateandtype("HEIGHT",byear, ayear, bmonth, amonth, bday, aday));
             };
 
             Thread thread = new Thread(runnable);

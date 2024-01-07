@@ -220,5 +220,4 @@ public class StatisticFragment extends Fragment {
 
         return rootView;
     }
-
 }

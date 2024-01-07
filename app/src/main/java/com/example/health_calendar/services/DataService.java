@@ -5,6 +5,7 @@ import android.content.Context;
 import com.example.health_calendar.daos.DateDao;
 import com.example.health_calendar.daos.NoteDao;
 import com.example.health_calendar.database.AppDatabase;
+import com.example.health_calendar.dtos.PressureValue;
 import com.example.health_calendar.entites.DateSQL;
 import com.example.health_calendar.entites.DateWithNotes;
 import com.example.health_calendar.entites.Note;
@@ -107,4 +108,16 @@ public class DataService {
         return dateDao.getAll();
     }
     public DateSQL getDateById(long id){ return dateDao.getDateById(id);}
+    public float getMediumByDateandtype(String type, int byear, int ayear,
+                                        int bmonth, int amonth, int bdate, int adate){
+        return dateDao.getAVGNotesByTypeBetweenDates(type, byear, ayear, bmonth, amonth, bdate, adate);
+    }
+    public List<String> getNotesByDateAndTypeS(String type, int byear, int ayear,
+                                               int bmonth, int amonth, int bdate, int adate){
+        return dateDao.getNotesByTypeBetweenDatesNoCast(type, byear, ayear, bmonth, amonth, bdate, adate);
+    }
+    public List<Float> getNotesByDateAndTypeF(String type, int byear, int ayear,
+                                              int bmonth, int amonth, int bdate, int adate){
+        return dateDao.getNotesByTypeBetweenDatesCast(type, byear, ayear, bmonth, amonth, bdate, adate);
+    }
 }
