@@ -10,4 +10,8 @@ public class PressureValue {
 
     public int  low;
 
+    @Override
+    public String toString() {
+        return high+"/"+low;
+    }
 }

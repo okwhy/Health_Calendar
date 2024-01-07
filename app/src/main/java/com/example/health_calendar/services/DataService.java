@@ -10,6 +10,7 @@ import com.example.health_calendar.entites.DateSQL;
 import com.example.health_calendar.entites.DateWithNotes;
 import com.example.health_calendar.entites.Note;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
@@ -119,5 +120,19 @@ public class DataService {
     public List<Float> getNotesByDateAndTypeF(String type, int byear, int ayear,
                                               int bmonth, int amonth, int bdate, int adate){
         return dateDao.getNotesByTypeBetweenDatesCast(type, byear, ayear, bmonth, amonth, bdate, adate);
+    }
+    public List<PressureValue>getPressureByDate(int byear, int ayear,
+                                                int bmonth, int amonth, int bdate, int adate){
+        List<String> pressureStrings=dateDao.getNotesByTypeBetweenDatesNoCast("PRESSURE", byear, ayear, bmonth, amonth, bdate, adate);
+        List<PressureValue> pressureValues=new ArrayList<>();
+        for(String s:pressureStrings){
+            String[] vals=s.split("/");
+            pressureValues.add(new PressureValue(Integer.parseInt(vals[0]),Integer.parseInt(vals[1])));
+        }
+        return pressureValues;
+    }
+    public String getMostCommonNote(String type, int byear, int ayear,
+                                    int bmonth, int amonth, int bdate, int adate){
+        return dateDao.getMostCommonNote(type, byear, ayear, bmonth, amonth, bdate, adate);
     }
 }

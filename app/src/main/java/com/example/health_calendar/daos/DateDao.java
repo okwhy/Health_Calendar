@@ -49,4 +49,9 @@ public interface DateDao {
             "DateSQL.month BETWEEN :bmonth and :amonth AND DateSQL.day BETWEEN" +
             ":bdate and :adate")
     List<Float> getNotesByTypeBetweenDatesCast(String type, int byear, int ayear, int bmonth, int amonth, int bdate, int adate);
+    @Query("select value  from DateSQL join Note on Note.id_fkdate=DateSQL.id " +
+            "where Note.type=:type and DateSQL.year BETWEEN :byear AND :ayear AND " +
+            "DateSQL.month BETWEEN :bmonth and :amonth AND DateSQL.day BETWEEN" +
+            ":bdate and :adate GROUP BY value order by value LIMIT 1"  )
+    String getMostCommonNote(String type, int byear, int ayear, int bmonth, int amonth, int bdate, int adate);
 }
