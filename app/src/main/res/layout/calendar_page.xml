@@ -13,7 +13,7 @@
         android:layout_gravity="top"
         android:layout_weight="3"
         android:visibility="visible"
-        app:type="classic"
+        app:type="one_day_picker"
         app:firstDayOfWeek="monday"
         app:eventsEnabled="true"
         />

@@ -124,8 +124,8 @@ public class CalendarFragment extends Fragment {
             textInputHeight.setText(notes.get("HEIGHT") == null ? "Нет данных" : notes.get("HEIGHT"));
             textInputWeight.setText(notes.get("WEIGHT") == null ? "Нет данных" : notes.get("WEIGHT"));
             textInputPulse.setText(notes.get("PULSE") == null ? "Нет данных" : notes.get("PULSE"));
-            textInputPressure.setText(notes.get("APPETITE") == null ? "Нет данных" : notes.get("APPETITE"));
-            textInputAppetite.setText(notes.get("APPETITE") == null ? "Нет данных" : notes.get("PULSE"));
+            textInputPressure.setText(notes.get("PRESSURE") == null ? "Нет данных" : notes.get("PRESSURE"));
+            textInputAppetite.setText(notes.get("APPETITE") == null ? "Нет данных" : notes.get("APPETITE"));
             textInputSlepping.setText(notes.get("SLEEP") == null ? "Нет данных" : notes.get("SLEEP"));
             textInputHealth.setText(notes.get("HEALTH") == null ? "Нет данных" : notes.get("HEALTH"));
         } else {
@@ -250,11 +250,14 @@ public class CalendarFragment extends Fragment {
             if (!textInputWeight.getText().toString().equals("Нет данных")) {
                 notes1.put("WEIGHT", textInputWeight.getText().toString());
             }
-            if (!textInputWeight.getText().toString().equals("Нет данных")) {
-                notes1.put("WEIGHT", textInputWeight.getText().toString());
+            if (!textInputPulse.getText().toString().equals("Нет данных")) {
+                notes1.put("PULSE", textInputPulse.getText().toString());
             }
             if (!textInputPressure.getText().toString().equals("Нет данных")) {
-                notes1.put("PULSE", textInputPressure.getText().toString());
+                notes1.put("PRESSURE", textInputPressure.getText().toString());
+            }
+            if (!textInputAppetite.getText().toString().equals("Нет данных")) {
+                notes1.put("APPETITE", textInputAppetite.getText().toString());
             }
             if (!textInputSlepping.getText().toString().equals("Нет данных")) {
                 notes1.put("SLEEP", textInputSlepping.getText().toString());
