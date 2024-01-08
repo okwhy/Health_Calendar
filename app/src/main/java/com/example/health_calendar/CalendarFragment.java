@@ -8,8 +8,10 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -238,8 +240,18 @@ public class CalendarFragment extends Fragment {
 
             }
         });
-        
 
+        String[] stateOfAppetite = {"Введите аппетит", "Отличный", "Хороший", "Средний", "Плохой", "Нет аппетита"};
+        Spinner spinnerAppetite = view.findViewById(R.id.textInputAppetite_Spiner);
+        ArrayAdapter<String> appetiteAdapter = new ArrayAdapter(getContext(), android.R.layout.simple_spinner_item, stateOfAppetite);
+        appetiteAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinnerAppetite.setAdapter(appetiteAdapter);
+
+        String[] stateOfHealth = {"Введите самочувствие", "Отличное", "Хорошее", "Среднее", "Плохое", "Ужасное"};
+        Spinner spinnerHealth = view.findViewById(R.id.textInputHealth_Spiner);
+        ArrayAdapter<String> appetiteHealth = new ArrayAdapter(getContext(), android.R.layout.simple_spinner_item, stateOfHealth);
+        appetiteHealth.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinnerHealth.setAdapter(appetiteHealth);
 
         final Button saveTextButton = view.findViewById(R.id.saveTextButton_1);
         saveTextButton.setOnClickListener(v -> {

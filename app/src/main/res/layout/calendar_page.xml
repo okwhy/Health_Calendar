@@ -173,6 +173,14 @@
                 android:hint="Введите аппетит"
                 android:visibility="visible"
                 android:textColor="@color/black" />
+
+            <Spinner
+                android:id="@+id/textInputAppetite_Spiner"
+                android:layout_width="327dp"
+                android:layout_height="wrap_content"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                android:background="@drawable/black_line"/>
         </LinearLayout>
 
         <LinearLayout
@@ -226,6 +234,13 @@
                 android:hint="Введите свое самочувствие"
                 android:visibility="visible"
                 android:textColor="@color/black" />
+            <Spinner
+                android:id="@+id/textInputHealth_Spiner"
+                android:layout_width="327dp"
+                android:layout_height="wrap_content"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                android:background="@drawable/black_line"/>
         </LinearLayout>
 
         <LinearLayout
