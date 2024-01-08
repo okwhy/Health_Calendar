@@ -50,7 +50,7 @@ public class MainActivity extends AppCompatActivity
         PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE);
 
         // Устанавливаем интервал в 24 часа
-        long repeatInterval = 5 * 60 * 1000; // 24 часа в миллисекундах
+        long repeatInterval = 60 * 60 * 1000; // час в миллисекундах
 
         // Устанавливаем повторяющееся событие
         alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, System.currentTimeMillis() + repeatInterval, repeatInterval, pendingIntent);
