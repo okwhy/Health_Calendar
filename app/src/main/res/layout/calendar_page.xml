@@ -18,7 +18,7 @@
         app:eventsEnabled="true"
         />
 
-    <LinearLayout
+    <LinearLayou    t
         android:id="@+id/dayInfo"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -33,7 +33,7 @@
         <LinearLayout
             android:id="@+id/dayHeight"
             android:layout_width="match_parent"
-            android:layout_height="40dp"
+            android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:visibility="visible">
 
@@ -49,7 +49,7 @@
             <EditText
                 android:id="@+id/textInputHeight"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_marginLeft="5dp"
                 android:hint="Введите рост"
                 android:visibility="visible"
@@ -85,7 +85,7 @@
             <EditText
                 android:id="@+id/textInputWeight"
                 android:layout_width="match_parent"
-                android:layout_height="40dp"
+                android:layout_height="wrap_content"
                 android:layout_marginLeft="5dp"
                 android:hint="Введите вес"
                 android:visibility="visible"
@@ -111,7 +111,7 @@
             <EditText
                 android:id="@+id/textInputPulse"
                 android:layout_width="match_parent"
-                android:layout_height="40dp"
+                android:layout_height="wrap_content"
                 android:layout_marginLeft="5dp"
                 android:hint="Введите ЧСС"
                 android:visibility="visible"
@@ -137,7 +137,7 @@
             <EditText
                 android:id="@+id/textInputPressure"
                 android:layout_width="match_parent"
-                android:layout_height="40dp"
+                android:layout_height="wrap_content"
                 android:layout_marginLeft="5dp"
                 android:hint="@string/hint1"
                 android:visibility="visible"
@@ -154,7 +154,7 @@
             <TextView
                 android:id="@+id/textAppetite"
                 android:layout_width="wrap_content"
-                android:layout_height="40dp"
+                android:layout_height="wrap_content"
                 android:text="Аппетит:"
                 android:textSize="17sp"
                 android:visibility="visible"
@@ -163,7 +163,7 @@
             <EditText
                 android:id="@+id/textInputAppetite"
                 android:layout_width="match_parent"
-                android:layout_height="40dp"
+                android:layout_height="wrap_content"
                 android:layout_marginLeft="5dp"
                 android:hint="Введите аппетит"
                 android:visibility="visible"
