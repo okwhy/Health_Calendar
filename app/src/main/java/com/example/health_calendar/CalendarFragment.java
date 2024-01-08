@@ -124,7 +124,7 @@ public class CalendarFragment extends Fragment {
             textInputHeight.setText(notes.get("HEIGHT") == null ? "Нет данных" : notes.get("HEIGHT"));
             textInputWeight.setText(notes.get("WEIGHT") == null ? "Нет данных" : notes.get("WEIGHT"));
             textInputPulse.setText(notes.get("PULSE") == null ? "Нет данных" : notes.get("PULSE"));
-            textInputPressure.setText(notes.get("APPETITE") == null ? "Нет данных" : notes.get("APPETITE"));
+            textInputPressure.setText(notes.get("APPETITE") == null ? "Нет данных" : notes.get("APPETITE")); // Артем
             textInputAppetite.setText(notes.get("APPETITE") == null ? "Нет данных" : notes.get("PULSE"));
             textInputSlepping.setText(notes.get("SLEEP") == null ? "Нет данных" : notes.get("SLEEP"));
             textInputHealth.setText(notes.get("HEALTH") == null ? "Нет данных" : notes.get("HEALTH"));
