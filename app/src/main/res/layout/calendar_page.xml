@@ -41,7 +41,7 @@
                 android:id="@+id/textHeight"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Рост (кг): "
+                android:text="Рост (см): "
                 android:textSize="17sp"
                 android:visibility="visible"
                 android:textColor="@color/black" />
@@ -53,7 +53,8 @@
                 android:layout_marginLeft="5dp"
                 android:hint="Введите рост"
                 android:visibility="visible"
-                android:textColor="@color/black" />
+                android:textColor="@color/black"
+                android:inputType="number"/>
 
             <TextView
                 android:id="@+id/textInputHeight_label"
@@ -89,7 +90,8 @@
                 android:layout_marginLeft="5dp"
                 android:hint="Введите вес"
                 android:visibility="visible"
-                android:textColor="@color/black" />
+                android:textColor="@color/black"
+                android:inputType="number"/>
         </LinearLayout>
 
         <LinearLayout
@@ -115,7 +117,8 @@
                 android:layout_marginLeft="5dp"
                 android:hint="Введите ЧСС"
                 android:visibility="visible"
-                android:textColor="@color/black" />
+                android:textColor="@color/black"
+                android:inputType="number"/>
         </LinearLayout>
 
         <LinearLayout
@@ -141,7 +144,9 @@
                 android:layout_marginLeft="5dp"
                 android:hint="@string/hint1"
                 android:visibility="visible"
-                android:textColor="@color/black" />
+                android:textColor="@color/black"
+                android:inputType="number|text"
+                android:digits="0123456789/"/>
         </LinearLayout>
 
         <LinearLayout
@@ -154,11 +159,19 @@
             <TextView
                 android:id="@+id/textAppetite"
                 android:layout_width="wrap_content"
-                android:layout_height="40dp"
+                android:layout_height="24dp"
                 android:text="Аппетит:"
+                android:textColor="@color/black"
                 android:textSize="17sp"
-                android:visibility="visible"
-                android:textColor="@color/black" />
+                android:visibility="visible" />
+
+            <Spinner
+                android:id="@+id/textInputAppetite_Spiner"
+                android:layout_width="327dp"
+                android:layout_height="wrap_content"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                android:background="@drawable/bottom_black_line"/>
 
             <EditText
                 android:id="@+id/textInputAppetite"
@@ -166,8 +179,9 @@
                 android:layout_height="40dp"
                 android:layout_marginLeft="5dp"
                 android:hint="Введите аппетит"
-                android:visibility="visible"
-                android:textColor="@color/black" />
+                android:inputType="number"
+                android:textColor="@color/black"
+                android:visibility="gone" />
         </LinearLayout>
 
         <LinearLayout
@@ -182,18 +196,19 @@
                 android:layout_width="wrap_content"
                 android:layout_height="40dp"
                 android:text="Сон (ч.):"
+                android:textColor="@color/black"
                 android:textSize="17sp"
-                android:visibility="visible"
-                android:textColor="@color/black" />
+                android:visibility="visible" />
 
             <EditText
                 android:id="@+id/textInputSlepping"
                 android:layout_width="match_parent"
-                android:layout_height="40dp"
+                android:layout_height="55dp"
                 android:layout_marginLeft="5dp"
                 android:hint="Введите кол-во часов сна"
-                android:visibility="visible"
-                android:textColor="@color/black" />
+
+                android:textColor="@color/black"
+                android:visibility="visible" />
         </LinearLayout>
 
         <LinearLayout
@@ -212,13 +227,21 @@
                 android:visibility="visible"
                 android:textColor="@color/black" />
 
+            <Spinner
+                android:id="@+id/textInputHealth_Spiner"
+                android:layout_width="260dp"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bottom_black_line"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
             <EditText
                 android:id="@+id/textInputHealth"
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
                 android:layout_marginLeft="5dp"
                 android:hint="Введите свое самочувствие"
-                android:visibility="visible"
+                android:visibility="gone"
                 android:textColor="@color/black" />
         </LinearLayout>
 

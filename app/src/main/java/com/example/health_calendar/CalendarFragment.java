@@ -8,8 +8,10 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -47,7 +49,6 @@ public class CalendarFragment extends Fragment {
 
     private DataService dataService;
     private List<EditText> texts;
-
 
 
     @Override
@@ -129,15 +130,15 @@ public class CalendarFragment extends Fragment {
             textInputSlepping.setText(notes.get("SLEEP") == null ? "Нет данных" : notes.get("SLEEP"));
             textInputHealth.setText(notes.get("HEALTH") == null ? "Нет данных" : notes.get("HEALTH"));
         } else {
-            textInputHeight.setText("Нет данных");
-            textInputWeight.setText("Нет данных");
-            textInputPulse.setText("Нет данных");
-            textInputPressure.setText("Нет данных");
-            textInputAppetite.setText("Нет данных");
-            textInputSlepping.setText("Нет данных");
-            textInputHealth.setText("Нет данных");
+            textInputHeight.setText("");
+            textInputWeight.setText("");
+            textInputPulse.setText("");
+            textInputPressure.setText("");
+            textInputAppetite.setText("");
+            textInputSlepping.setText("");
+            textInputHealth.setText("");
         }
-        calendarView.setOnDayClickListener(new OnDayClickListener(){
+        calendarView.setOnDayClickListener(new OnDayClickListener() {
             @Override
             public void onDayClick(EventDay eventDay) {
 
@@ -213,6 +214,10 @@ public class CalendarFragment extends Fragment {
             }
         });
 
+
+
+
+
         calendarView.setOnForwardPageChangeListener(new OnCalendarPageChangeListener() {
             @Override
             public void onChange() {
@@ -238,8 +243,18 @@ public class CalendarFragment extends Fragment {
 
             }
         });
-        
 
+        String[] stateOfAppetite = {"Введите аппетит", "Отличный", "Хороший", "Средний", "Плохой", "Нет аппетита"};
+        Spinner spinnerAppetite = view.findViewById(R.id.textInputAppetite_Spiner);
+        ArrayAdapter<String> appetiteAdapter = new ArrayAdapter(getContext(), android.R.layout.simple_spinner_item, stateOfAppetite);
+        appetiteAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinnerAppetite.setAdapter(appetiteAdapter);
+
+        String[] stateOfHealth = {"Введите самочувствие", "Отличное", "Хорошее", "Среднее", "Плохое", "Ужасное"};
+        Spinner spinnerHealth = view.findViewById(R.id.textInputHealth_Spiner);
+        ArrayAdapter<String> appetiteHealth = new ArrayAdapter(getContext(), android.R.layout.simple_spinner_item, stateOfHealth);
+        appetiteHealth.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinnerHealth.setAdapter(appetiteHealth);
 
         final Button saveTextButton = view.findViewById(R.id.saveTextButton_1);
         saveTextButton.setOnClickListener(v -> {
@@ -319,7 +334,7 @@ public class CalendarFragment extends Fragment {
 
         int year = cal.get(1);
 
-        int month = cal.get(2)+1;
+        int month = cal.get(2) + 1;
 
         int days_amount = cal.getActualMaximum(Calendar.DAY_OF_MONTH);
 
@@ -328,32 +343,32 @@ public class CalendarFragment extends Fragment {
         boolean noedit;
 
         LocalDate seldate;
-        List<Integer> daysWithData=new ArrayList<>();
-        Runnable runnable= () -> {
-            daysWithData.addAll(dataService.getDaysByMonth(year,month));
+        List<Integer> daysWithData = new ArrayList<>();
+        Runnable runnable = () -> {
+            daysWithData.addAll(dataService.getDaysByMonth(year, month));
         };
         Thread thread = new Thread(runnable);
         thread.start();
         thread.join();
         List<EventDay> events = new ArrayList<>();
 
-        for(int iter = 0; iter < days_amount; iter++){
+        for (int iter = 0; iter < days_amount; iter++) {
 
             Calendar calendar_temp = Calendar.getInstance();
 
-            seldate = LocalDate.of(year, month, (day+iter));
+            seldate = LocalDate.of(year, month, (day + iter));
 
             noedit = seldate.isAfter(curdate) || DAYS.between(curdate, seldate) < -3;
-            calendar_temp.set(year,month-1,day+iter);
-            if(noedit){
-                if(daysWithData.contains(day+iter)){
+            calendar_temp.set(year, month - 1, day + iter);
+            if (noedit) {
+                if (daysWithData.contains(day + iter)) {
                     events.add(new EventDay(calendar_temp, R.drawable.ic_line2));
-                }else{
+                } else {
                     events.add(new EventDay(calendar_temp, R.drawable.ic_line));
                 }
 
             }
-            if(daysWithData.contains(day+iter)){
+            if (daysWithData.contains(day + iter)) {
                 events.add(new EventDay(calendar_temp, R.drawable.ic_line2));
             }
         }
