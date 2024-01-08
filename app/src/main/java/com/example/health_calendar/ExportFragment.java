@@ -68,6 +68,7 @@ public class ExportFragment extends Fragment {
         buttonCreateExcel.setBackgroundColor(Color.GREEN);
 
         dateOt = (EditText) view.findViewById(R.id.dateOt);
+
         dateDo = (EditText) view.findViewById(R.id.dateDo);
 
         dateOt.setOnClickListener(new View.OnClickListener() {
@@ -81,7 +82,7 @@ public class ExportFragment extends Fragment {
                     @Override
                     public void onDateSet(DatePicker view, int year,
                                           int monthOfYear, int dayOfMonth) {
-                        dateOt.setText(dayOfMonth + "-" + (monthOfYear + 1) + "-" + year);
+                        dateOt.setText(dayOfMonth + "." + (monthOfYear + 1) + "." + year);
                         byear=year;
                         bmonth=monthOfYear+1;
                         bday=dayOfMonth;
@@ -102,7 +103,7 @@ public class ExportFragment extends Fragment {
                     @Override
                     public void onDateSet(DatePicker view, int year,
                                           int monthOfYear, int dayOfMonth) {
-                        dateDo.setText(dayOfMonth + "-" + (monthOfYear + 1) + "-" + year);
+                        dateDo.setText(dayOfMonth + "." + (monthOfYear + 1) + "." + year);
                         ayear=year;
                         amonth=monthOfYear+1;
                         aday=dayOfMonth;

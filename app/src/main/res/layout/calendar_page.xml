@@ -9,7 +9,7 @@
     <com.applandeo.materialcalendarview.CalendarView
         android:id="@+id/calendarView"
         android:layout_width="match_parent"
-        android:layout_height="320dp"
+        android:layout_height="370dp"
         android:layout_gravity="top"
         android:layout_weight="3"
         android:visibility="visible"
@@ -41,7 +41,7 @@
                 android:id="@+id/textHeight"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Рост (кг):"
+                android:text="Рост (кг): "
                 android:textSize="17sp"
                 android:visibility="visible"
                 android:textColor="@color/black" />
@@ -53,6 +53,15 @@
                 android:layout_marginLeft="5dp"
                 android:hint="Введите рост"
                 android:visibility="visible"
+                android:textColor="@color/black" />
+
+            <TextView
+                android:id="@+id/textInputHeight_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Текст"
+                android:textSize="17sp"
+                android:visibility="gone"
                 android:textColor="@color/black" />
 
         </LinearLayout>
@@ -220,7 +229,7 @@
             <Button
                 android:id="@+id/saveTextButton_1"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="40dp"
                 android:text="@string/save"
                 android:visibility="visible"
                 />
