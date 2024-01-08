@@ -171,7 +171,8 @@
                 android:layout_height="wrap_content"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                android:background="@drawable/bottom_black_line"/>
+                android:background="@drawable/bottom_black_line"
+                android:visibility="gone"/>
 
             <EditText
                 android:id="@+id/textInputAppetite"
@@ -179,9 +180,8 @@
                 android:layout_height="40dp"
                 android:layout_marginLeft="5dp"
                 android:hint="Введите аппетит"
-                android:inputType="number"
                 android:textColor="@color/black"
-                android:visibility="gone" />
+                android:visibility="visible" />
         </LinearLayout>
 
         <LinearLayout
@@ -206,7 +206,7 @@
                 android:layout_height="55dp"
                 android:layout_marginLeft="5dp"
                 android:hint="Введите кол-во часов сна"
-
+                android:inputType="number"
                 android:textColor="@color/black"
                 android:visibility="visible" />
         </LinearLayout>
@@ -233,7 +233,8 @@
                 android:layout_height="wrap_content"
                 android:background="@drawable/bottom_black_line"
                 app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                android:visibility="gone"/>
 
             <EditText
                 android:id="@+id/textInputHealth"
@@ -241,7 +242,7 @@
                 android:layout_height="40dp"
                 android:layout_marginLeft="5dp"
                 android:hint="Введите свое самочувствие"
-                android:visibility="gone"
+                android:visibility="visible"
                 android:textColor="@color/black" />
         </LinearLayout>
 
