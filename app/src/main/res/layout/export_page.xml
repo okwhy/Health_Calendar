@@ -10,39 +10,43 @@
 
     <TextView
         android:id="@+id/thirdFragment"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Экспорт в Excel"
-        android:textColor="#43a047"
-        android:textSize="28sp"
-        android:textStyle="italic|bold"
+        android:layout_width="289dp"
+        android:layout_height="54dp"
+        android:layout_gravity="top"
+        android:layout_marginTop="26dp"
+        android:layout_marginBottom="97dp"
+
+        android:fontFamily="sans-serif-medium"
+        android:gravity="center"
+        android:text="Экспорт в Exel"
+        android:textAlignment="center"
+        android:textColor="#673AB7"
+        android:textSize="34sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.063" />
-
+        app:layout_constraintVertical_bias="0.037" />
 
     <EditText
         android:id="@+id/dateOt"
         android:layout_width="155dp"
         android:layout_height="54dp"
         android:layout_centerHorizontal="true"
-        android:background="#d4d4d4"
         android:hint="От"
         android:padding="15dp"
-        android:textColor="#897"
-        android:textColorHint="#090"
+        android:textColor="#D9D5E1"
+        android:textColorHint="#FFFFFF"
         android:textSize="20sp"
         android:textStyle="bold"
         android:inputType="date"
+        android:background="@drawable/rounded_edittext_bg"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.062"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.24"
+        app:layout_constraintVertical_bias="0.3"
         tools:ignore="MissingConstraints" />
 
     <EditText
@@ -50,33 +54,36 @@
         android:layout_width="155dp"
         android:layout_height="54dp"
         android:layout_centerHorizontal="true"
-        android:background="#d4d4d4"
         android:hint="До"
         android:padding="15dp"
-        android:textColor="#897"
-        android:textColorHint="#090"
+        android:textColor="#D9D5E1"
+        android:textColorHint="#FFFFFF"
         android:textSize="20sp"
         android:textStyle="bold"
         android:inputType="date"
+        android:background="@drawable/rounded_edittext_bg"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.937"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.24"
+        app:layout_constraintVertical_bias="0.3"
         tools:ignore="MissingConstraints" />
 
     <Button
         android:id="@+id/buttonCreateExcel"
-        android:layout_width="160dp"
-        android:layout_height="100dp"
-        android:text="Экспортировать"
-        android:textColor="@color/black"
+        android:layout_width="188dp"
+        android:layout_height="63dp"
+        android:layout_gravity="center"
+        android:background="@drawable/rounded_button"
+        android:text="ЭКСПОРТИРОВАТЬ"
+        android:textColor="#fff"
+        android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.633" />
+        app:layout_constraintVertical_bias="0.711" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

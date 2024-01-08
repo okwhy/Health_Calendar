@@ -65,7 +65,6 @@ public class ExportFragment extends Fragment {
         View view = inflater.inflate(R.layout.export_page, container, false);
 
         Button buttonCreateExcel = view.findViewById(R.id.buttonCreateExcel);
-        buttonCreateExcel.setBackgroundColor(Color.GREEN);
 
         dateOt = (EditText) view.findViewById(R.id.dateOt);
 
@@ -157,75 +156,6 @@ public class ExportFragment extends Fragment {
             WritableSheet sheet = workbook.createSheet("Дневник здоровья", 0);
 
             // Запись данных в ячейки
-            /* for (int i = 1; i <= 7; i++) {
-                Label label = new Label(0, i, String.valueOf(i));
-                sheet.addCell(label);
-            }
-
-            Label label = new Label(1, 1, "Рост (см)");
-            sheet.addCell(label);
-
-            label = new Label(1, 2, "Вес (кг)");
-            sheet.addCell(label);
-
-            label = new Label(1, 3, "ЧСС (уд/мин) в покое");
-            sheet.addCell(label);
-
-            label = new Label(1, 4, "Давление (А/Д)");
-            sheet.addCell(label);
-
-            label = new Label(1, 5, "Аппетит");
-            sheet.addCell(label);
-
-            label = new Label(1, 6, "Сон");
-            sheet.addCell(label);
-
-            label = new Label(1, 7, "Самочувствие");
-            sheet.addCell(label);
-
-            for (int i = 2; i < dateFormat.size() + 2; i++) {
-                label = new Label(i, 0, dateFormat.get(i - 2));
-                Log.d("вававав", dateFormat.get(i - 2));
-                sheet.addCell(label);
-            }
-            for (int i = 2; i < 10; i++) {
-                label = new Label(i, 1, height.get(i - 2));
-                sheet.addCell(label);
-            }
-
-            for (int i = 2; i < 10; i++) {
-                label = new Label(i, 2, weight.get(i - 2));
-                sheet.addCell(label);
-            }
-
-            for (int i = 2; i < 10; i++) {
-                label = new Label(i, 3, pulse.get(i - 2));
-                sheet.addCell(label);
-            }
-
-            for (int i = 2; i < 10; i++) {
-                label = new Label(i, 4, pressure.get(i - 2));
-                sheet.addCell(label);
-            }
-
-            for (int i = 2; i < 10; i++) {
-                label = new Label(i, 5, appetite.get(i - 2));
-                sheet.addCell(label);
-            }
-
-            for (int i = 2; i < 10; i++) {
-                label = new Label(i, 6, sleep.get(i - 2));
-                sheet.addCell(label);
-            }
-
-            for (int i = 2; i < 10; i++) {
-                label = new Label(i, 7, health.get(i - 2));
-                sheet.addCell(label);
-            }
-
-            for (int i = 0; i < 10; i++) {
-                setColumnWidth(sheet, i);
-            }  */
                 Label label = new Label(0, 0, "Дата");
                 sheet.addCell(label);
                 label = new Label(1, 0, "Рост (см)");
