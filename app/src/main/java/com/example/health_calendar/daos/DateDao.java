@@ -23,6 +23,8 @@ public interface DateDao {
     List<DateSQL>getByYear(int year);
     @Query("select * from DateSQL where DateSQL.year =:year and DateSQL.month =:month order by day")
     List<DateSQL>getByMonth(int year, int month);
+    @Query("select day from DateSQL where DateSQL.year =:year and DateSQL.month =:month order by day")
+    List<Integer>getDaysByMonth(int year,int month);
     @Query("SELECT * FROM DateSQL WHERE DateSQL.year BETWEEN :byear AND :ayear AND " +
             "DateSQL.month BETWEEN :bmonth and :amonth AND DateSQL.day BETWEEN" +
             ":bdate and :adate")

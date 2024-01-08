@@ -54,9 +54,13 @@ public class DataService {
 
         return dateDao.getByYear(year);
     }
-    public List<DateSQL> GetByMonth(int year, byte month){
+    public List<DateSQL> GetByMonth(int year, int month){
 
         return dateDao.getByMonth(year,month);
+    }
+    public List<Integer> getDaysByMonth(int year, int month){
+
+        return dateDao.getDaysByMonth(year,month);
     }
     public List<Note> GetAll(){
 

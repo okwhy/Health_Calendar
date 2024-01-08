@@ -3,8 +3,6 @@ package com.example.health_calendar;
 import static com.google.android.gms.common.util.CollectionUtils.listOf;
 import static java.time.temporal.ChronoUnit.DAYS;
 
-import android.database.Cursor;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -12,24 +10,20 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
-import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 import com.applandeo.materialcalendarview.CalendarView;
 import com.applandeo.materialcalendarview.EventDay;
-import com.applandeo.materialcalendarview.exceptions.OutOfDateRangeException;
 import com.applandeo.materialcalendarview.listeners.OnCalendarPageChangeListener;
 import com.applandeo.materialcalendarview.listeners.OnDayClickListener;
 
@@ -75,11 +69,17 @@ public class CalendarFragment extends Fragment {
 
         calendarView.setSwipeEnabled(false);
 
-        addmarks(calendarView);
 
         //------------------------------------------------------
 
         dataService = DataService.initial(this.getContext());
+
+        try {
+            addmarks(calendarView);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+
 
         final List<String> calendarStrings = new ArrayList<>();
         final int[] days = new int[31];
@@ -217,7 +217,11 @@ public class CalendarFragment extends Fragment {
             @Override
             public void onChange() {
 
-                addmarks(calendarView);
+                try {
+                    addmarks(calendarView);
+                } catch (InterruptedException e) {
+                    throw new RuntimeException(e);
+                }
 
             }
         });
@@ -226,7 +230,11 @@ public class CalendarFragment extends Fragment {
             @Override
             public void onChange() {
 
-               addmarks(calendarView);
+                try {
+                    addmarks(calendarView);
+                } catch (InterruptedException e) {
+                    throw new RuntimeException(e);
+                }
 
             }
         });
@@ -305,8 +313,8 @@ public class CalendarFragment extends Fragment {
 
     }
 
-    public void addmarks(CalendarView calendarView)
-    {
+    public void addmarks(CalendarView calendarView) throws InterruptedException {
+
         Calendar cal = calendarView.getCurrentPageDate();
 
         int year = cal.get(1);
@@ -320,7 +328,13 @@ public class CalendarFragment extends Fragment {
         boolean noedit;
 
         LocalDate seldate;
-
+        List<Integer> daysWithData=new ArrayList<>();
+        Runnable runnable= () -> {
+            daysWithData.addAll(dataService.getDaysByMonth(year,month));
+        };
+        Thread thread = new Thread(runnable);
+        thread.start();
+        thread.join();
         List<EventDay> events = new ArrayList<>();
 
         for(int iter = 0; iter < days_amount; iter++){
@@ -330,11 +344,17 @@ public class CalendarFragment extends Fragment {
             seldate = LocalDate.of(year, month, (day+iter));
 
             noedit = seldate.isAfter(curdate) || DAYS.between(curdate, seldate) < -3;
-
+            calendar_temp.set(year,month-1,day+iter);
             if(noedit){
-                calendar_temp.set(year,month-1,day+iter);
+                if(daysWithData.contains(day+iter)){
+                    events.add(new EventDay(calendar_temp, R.drawable.ic_line2));
+                }else{
+                    events.add(new EventDay(calendar_temp, R.drawable.ic_line));
+                }
 
-                events.add(new EventDay(calendar_temp, R.drawable.ic_line));
+            }
+            if(daysWithData.contains(day+iter)){
+                events.add(new EventDay(calendar_temp, R.drawable.ic_line2));
             }
         }
 
