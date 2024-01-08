@@ -9,6 +9,6 @@ public class AlarmReceiver extends BroadcastReceiver {
     public void onReceive(Context context, Intent intent) {
         // Запуск службы при получении события от AlarmManager
         Intent serviceIntent = new Intent(context, UserNotificationService.class);
-        context.startService(serviceIntent);
+        context.startForegroundService(serviceIntent);
     }
 }

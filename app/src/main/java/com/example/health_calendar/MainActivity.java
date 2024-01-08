@@ -1,6 +1,10 @@
 package com.example.health_calendar;
 
 import android.annotation.SuppressLint;
+import android.app.AlarmManager;
+import android.app.PendingIntent;
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 
@@ -25,6 +29,8 @@ public class MainActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        setRepeatingAlarm();
+
         bottomNavigationView
                 = (BottomNavigationView)findViewById(R.id.bottomNavigationView);
 
@@ -35,6 +41,20 @@ public class MainActivity extends AppCompatActivity
     CalendarFragment calendarFragment = new CalendarFragment();
     StatisticFragment statisticFragment = new StatisticFragment();
     ExportFragment exportFragment = new ExportFragment();
+
+    private void setRepeatingAlarm() {
+        AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+
+        // Создаем Intent для нашего BroadcastReceiver
+        Intent intent = new Intent(this, AlarmReceiver.class);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE);
+
+        // Устанавливаем интервал в 24 часа
+        long repeatInterval = 5 * 60 * 1000; // 24 часа в миллисекундах
+
+        // Устанавливаем повторяющееся событие
+        alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, System.currentTimeMillis() + repeatInterval, repeatInterval, pendingIntent);
+    }
 
     @SuppressLint("NonConstantResourceId")
     @Override
