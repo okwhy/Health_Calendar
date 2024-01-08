@@ -180,7 +180,8 @@
                 android:layout_height="wrap_content"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                android:background="@drawable/black_line"/>
+                android:background="@drawable/black_line"
+                android:visibility="gone"/>
         </LinearLayout>
 
         <LinearLayout
@@ -240,7 +241,8 @@
                 android:layout_height="wrap_content"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                android:background="@drawable/black_line"/>
+                android:background="@drawable/black_line"
+                android:visibility="gone"/>
         </LinearLayout>
 
         <LinearLayout
