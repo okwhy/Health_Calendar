@@ -3,10 +3,12 @@ package com.example.health_calendar;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.Service;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.IBinder;
+import android.os.PowerManager;
 
 import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
@@ -21,6 +23,12 @@ public class UserNotificationService extends Service {
     public IBinder onBind(Intent intent) {
         return null;
     }
+
+    PowerManager powerManager = (PowerManager) getSystemService(Context.POWER_SERVICE);
+    PowerManager.WakeLock wakeLock = powerManager.newWakeLock(
+            PowerManager.PARTIAL_WAKE_LOCK,
+            "YourApp::WakeLock"
+    );
 
     @Override
     public void onCreate() {
