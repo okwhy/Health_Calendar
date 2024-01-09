@@ -196,16 +196,19 @@
                 </LinearLayout>
 
                 <Button
+                    android:id="@+id/showPopupButton"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
+                    android:radius="100dp"
                     android:backgroundTint="@color/white"
                     android:textSize="80sp"
-                    android:text="?"
                     android:textColor="#673AB7"
                     android:textStyle="bold"
+                    android:padding="0dp"
+                    android:text="?"
                     >
-
                 </Button>
+
 
         </LinearLayout>
 

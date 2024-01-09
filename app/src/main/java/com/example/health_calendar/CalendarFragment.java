@@ -3,6 +3,8 @@ package com.example.health_calendar;
 import static com.google.android.gms.common.util.CollectionUtils.listOf;
 import static java.time.temporal.ChronoUnit.DAYS;
 
+import android.app.AlertDialog;
+import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -12,6 +14,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -50,7 +53,7 @@ public class CalendarFragment extends Fragment {
     private DataService dataService;
     private List<EditText> texts;
 
-
+    private AlertDialog alertDialog;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -280,8 +283,48 @@ public class CalendarFragment extends Fragment {
             Log.d("dafa", notes1.toString() + " " + currentYear);
             insertorupdateDate(notes1, currentYear, currentMonth, currentDay);
         });
-        return view;
 
+        // Подключаемся к кнопке в макете вашей активности
+        Button showPopupButton = view.findViewById(R.id.showPopupButton);
+
+        // Устанавливаем слушателя нажатия на кнопку
+        showPopupButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showPopup();
+            }
+        });
+        return view;
+    }
+
+    private void showPopup() {
+        Context context = requireContext();
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+
+        LayoutInflater inflater = LayoutInflater.from(context);
+        View popupView = inflater.inflate(R.layout.popup_layout, null);
+
+        TextView popupText = popupView.findViewById(R.id.popupText);
+        Button closeButton = popupView.findViewById(R.id.closeButton);
+
+        popupText.setText("Приложение Health Calendar представляет собой инструмент для отслеживания основных показателей здоровья человека.\n" +
+                "\n" +
+                "В приложении реализован календарь, в котором можно установить, за какой день вносятся данные. Для сохранения введенных данных необходимо нажать на кнопку \"Сохранить\".\n" +
+                "\n" +
+                "Для удобства использования календаря были введены метки для дней. Дни, в которые данные не были своевременно введены помечаются красной полоской, а дни, в которые данные были внесены вовремя помечаются зеленой полоской.\n" +
+                "\n" +
+                "Приятного вам использования!");
+
+        closeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                alertDialog.dismiss();
+            }
+        });
+
+        builder.setView(popupView);
+        alertDialog = builder.create();
+        alertDialog.show();
     }
 
     private void insertorupdateDate(Map<String, String> notes, int year, int month, int date) {

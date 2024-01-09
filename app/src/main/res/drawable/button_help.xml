@@ -1,5 +1,14 @@
-<!-- res/drawable/rounded_button.xml -->
-<shape xmlns:android="http://schemas.android.com/apk/res/android">
-    <solid android:color="#FEFEFF" /> <!-- Цвет фона кнопки -->
-    <corners android:radius="20dp" /> <!-- Радиус закругления углов в dp -->
-</shape>
+<!-- res/drawable/button_border.xml -->
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item>
+        <shape>
+            <solid android:color="#00FFFFFF" /> <!-- Задайте цвет фона кнопки -->
+        </shape>
+    </item>
+    <item>
+        <shape>
+            <stroke android:color="#A1A1A1" android:width="20dp" /> <!-- Задайте цвет и ширину обводки -->
+            <corners android:radius="8dp" /> <!-- Задайте радиус закругления углов -->
+        </shape>
+    </item>
+</layer-list>
