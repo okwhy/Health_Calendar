@@ -18,7 +18,7 @@
 
         android:fontFamily="sans-serif-medium"
         android:gravity="center"
-        android:text="Экспорт в Exel"
+        android:text="Экспорт в Excel"
         android:textAlignment="center"
         android:textColor="#673AB7"
         android:textSize="34sp"

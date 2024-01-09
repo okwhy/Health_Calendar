@@ -1,6 +1,7 @@
 package com.example.health_calendar;
 
 import android.app.DatePickerDialog;
+import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.icu.text.SimpleDateFormat;
 import android.icu.util.LocaleData;
@@ -16,6 +17,8 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
 import com.example.health_calendar.entites.DateSQL;
@@ -43,8 +46,10 @@ import jxl.write.Label;
 import jxl.write.WritableSheet;
 import jxl.write.WritableWorkbook;
 
+
 public class ExportFragment extends Fragment {
 
+    private static final int MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE = 1;
     public ExportFragment() {
         // require a empty public constructor
     }
@@ -127,6 +132,13 @@ public class ExportFragment extends Fragment {
         // Создание нового файла Excel
         String androidVersion = Build.VERSION.RELEASE;
 
+        if (ContextCompat.checkSelfPermission(getActivity(),"android.permission.READ_EXTERNAL_STORAGE")
+                != PackageManager.PERMISSION_GRANTED) {
+            // Если разрешения нет, запросим его у пользователя
+            ActivityCompat.requestPermissions(getActivity(),
+                    new String[]{"android.permission.READ_EXTERNAL_STORAGE"},
+                    MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE);
+        }
         File downloadsDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS);
         String baseFileName = "Health_Diary";
         File file = getUniqueFile(downloadsDir, baseFileName, "xls");

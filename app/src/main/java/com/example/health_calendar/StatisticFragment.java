@@ -330,14 +330,14 @@ public class StatisticFragment extends Fragment {
         barChart.setData(barDataSleep);
     }
     private void showinfoCommon(TextView text,String cat) throws InterruptedException {
-        final float[] avg = new float[1];
+        final String[] avg = new String[1];
         Runnable runnable = () -> {
-            avg[0] = dataService.getMediumByDateandtype(cat, byear, ayear, bmonth, amonth, bday, aday);
+            avg[0] = dataService.getMostCommonNote(cat, byear, ayear, bmonth, amonth, bday, aday);
         };
             Thread thread = new Thread(runnable);
             thread.start();
             thread.join();
-        text.setText(Float.toString(avg[0]));
+        text.setText(avg[0]);
     }
     private void showinfoPressure(TextView text,LineChart lineChart,String cat) throws InterruptedException {
         List<PressureValue>vals=new ArrayList<>();
