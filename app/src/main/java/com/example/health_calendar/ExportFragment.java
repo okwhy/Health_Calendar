@@ -4,6 +4,7 @@ import android.app.DatePickerDialog;
 import android.graphics.Color;
 import android.icu.text.SimpleDateFormat;
 import android.icu.util.LocaleData;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.util.Log;
@@ -124,6 +125,8 @@ public class ExportFragment extends Fragment {
 
     private void createExcelFile() {
         // Создание нового файла Excel
+        String androidVersion = Build.VERSION.RELEASE;
+
         File downloadsDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS);
         String baseFileName = "Health_Diary";
         File file = getUniqueFile(downloadsDir, baseFileName, "xls");
@@ -191,7 +194,6 @@ public class ExportFragment extends Fragment {
                         sheet.addCell(label);
                     }
                     refDate=refDate.minusDays(1);
-                    Log.d("sdas",dwn.dateSQL.getDateString() +" afaga "+refDate);
                     rown++;
                 }
 //                Log.d("fd",tday+" "+tmonth+" "+tyear);
